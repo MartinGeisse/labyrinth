@@ -42,5 +42,5 @@ public class Game {
 	public void setRoom(Room room) {
 		this.room = room;
 	}
-	
+
 }

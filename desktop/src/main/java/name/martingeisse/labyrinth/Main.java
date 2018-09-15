@@ -38,9 +38,9 @@ public class Main {
 
 		// initialize game
 		Game game = new Game();
-		RoomBuilder builder = new RoomBuilder(40, 30);
-		builder.fill(0);
-		builder.roomOutline(1);
+		RoomBuilder builder = new RoomBuilder(19, 14);
+		builder.fill(1);
+		builder.roomOutline(2);
 		game.setRoom(builder.getRoom());
 
 		// main loop

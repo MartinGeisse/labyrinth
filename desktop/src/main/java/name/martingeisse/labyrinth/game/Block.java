@@ -12,6 +12,7 @@ import name.martingeisse.labyrinth.system.Texture;
  */
 public enum Block {
 
+	NOTHING(true),
 	TILE1(false),
 	WALL1(true);
 

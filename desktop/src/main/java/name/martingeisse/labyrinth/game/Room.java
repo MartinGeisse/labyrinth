@@ -79,18 +79,26 @@ public class Room {
 	public void step() {
 		playerSprite.step();
 
-		// make the screen follow the player
-		screenX = (playerSprite.getPlayerX() << 5) + playerSprite.getPlayerFractionX() + 16 - (Display.getWidth() >> 1);
-		if (screenX < 0) {
-			screenX = 0;
-		} else if (screenX + Display.getWidth() > (width << 5)) {
-			screenX = (width << 5) - Display.getWidth();
+		// make the screen follow the player (TODO assumes fixed size of 640x480, but that's easy to change)
+		if (width <= 20) {
+			screenX = -((Display.getWidth() - (width << 5)) >> 1);
+		} else {
+			screenX = (playerSprite.getPlayerX() << 5) + playerSprite.getPlayerFractionX() + 16 - (Display.getWidth() >> 1);
+			if (screenX < 0) {
+				screenX = 0;
+			} else if (screenX + Display.getWidth() > (width << 5)) {
+				screenX = (width << 5) - Display.getWidth();
+			}
 		}
-		screenY = (playerSprite.getPlayerY() << 5) + playerSprite.getPlayerFractionY() + 16 - (Display.getHeight() >> 1);
-		if (screenY < 0) {
-			screenY = 0;
-		} else if (screenY + Display.getHeight() > (height << 5)) {
-			screenY = (height << 5) - Display.getHeight();
+		if (height <= 15) {
+			screenY = -((Display.getHeight() - (height << 5)) >> 1);
+		} else {
+			screenY = (playerSprite.getPlayerY() << 5) + playerSprite.getPlayerFractionY() + 16 - (Display.getHeight() >> 1);
+			if (screenY < 0) {
+				screenY = 0;
+			} else if (screenY + Display.getHeight() > (height << 5)) {
+				screenY = (height << 5) - Display.getHeight();
+			}
 		}
 	}
 
