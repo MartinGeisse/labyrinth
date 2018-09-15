@@ -1,0 +1,7 @@
+https://lanto.itch.io/free-characters
+    $monja.png
+    $monja_dark.png
+    Free Charas.zip
+    personajes-lanto.png
+https://opengameart.org/content/lots-of-free-2d-tiles-and-sprites-by-hyptosis
+	hyptosis_tile-art-batch-1.png
