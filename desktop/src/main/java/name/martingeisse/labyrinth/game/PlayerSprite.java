@@ -19,27 +19,51 @@ public class PlayerSprite {
 	private int playerFractionX = 0;
 	private int playerFractionY = 0;
 	private Direction direction = Direction.EAST;
+	private boolean walking = false;
 
 	public PlayerSprite(Room room) {
 		this.room = room;
 	}
 
 	public void step() {
-		if (Keyboard.isKeyDown(Keyboard.KEY_LEFT)) {
-			direction = Direction.WEST;
-		} else if (Keyboard.isKeyDown(Keyboard.KEY_RIGHT)) {
-			direction = Direction.EAST;
-		} else if (Keyboard.isKeyDown(Keyboard.KEY_UP)) {
-			direction = Direction.NORTH;
-		} else if (Keyboard.isKeyDown(Keyboard.KEY_DOWN)) {
-			direction = Direction.SOUTH;
+		if (!walking) {
+			if (Keyboard.isKeyDown(Keyboard.KEY_LEFT)) {
+				tryStartWalking(Direction.WEST);
+			} else if (Keyboard.isKeyDown(Keyboard.KEY_RIGHT)) {
+				tryStartWalking(Direction.EAST);
+			} else if (Keyboard.isKeyDown(Keyboard.KEY_UP)) {
+				tryStartWalking(Direction.NORTH);
+			} else if (Keyboard.isKeyDown(Keyboard.KEY_DOWN)) {
+				tryStartWalking(Direction.SOUTH);
+			}
+		}
+		if (walking) {
+			playerFractionX += 4 * direction.getDeltaX();
+			playerFractionY += 4 * direction.getDeltaY();
+			if (playerFractionX == 0 && playerFractionY == 0) {
+				walking = false;
+			}
+		}
+	}
+
+	private void tryStartWalking(Direction direction) {
+		this.direction = direction;
+		int newX = playerX + direction.getDeltaX();
+		int newY = playerY + direction.getDeltaY();
+		if (room.isValidPosition(newX, newY) && room.getBlock(newX, newY) == 0) {
+			walking = true;
+			playerX = newX;
+			playerFractionX = -32 * direction.getDeltaX();
+			playerY = newY;
+			playerFractionY = -32 * direction.getDeltaY();
 		}
 	}
 
 	public void draw() {
 		int anchorX = (playerX << 5) + playerFractionX;
 		int anchorY = (playerY << 5) + playerFractionY;
-		Resources.getTexture("player_" + direction.name().toLowerCase() + ".png").glBindTexture();
+		int frame = (walking ? ((((playerFractionX + playerFractionY) >> 2) + 100) % 3) : 0);
+		Resources.getTexture("player_" + direction.name().toLowerCase() + '_' + frame + ".png").glBindTexture();
 		GL11.glEnable(GL11.GL_TEXTURE_2D);
 		GL11.glColor3ub((byte) 255, (byte) 255, (byte) 255);
 		GL11.glEnable(GL11.GL_BLEND);

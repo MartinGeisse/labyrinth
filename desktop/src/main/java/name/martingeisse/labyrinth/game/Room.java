@@ -41,8 +41,12 @@ public class Room {
 		return playerSprite;
 	}
 
+	public boolean isValidPosition(int x, int y) {
+		return x >= 0 && y >= 0 && x < width && y < height;
+	}
+
 	public int getBlockIndex(int x, int y) {
-		if (x < 0 || y < 0 || x >= width || y >= height) {
+		if (!isValidPosition(x, y)) {
 			throw new IllegalArgumentException("block coordinates out of bounds: (" + x + ", " + y +
 				") for room size (" + width + " x " + height + ")");
 		}
