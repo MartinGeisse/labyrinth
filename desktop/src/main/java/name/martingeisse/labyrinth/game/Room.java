@@ -4,8 +4,6 @@
  */
 package name.martingeisse.labyrinth.game;
 
-import name.martingeisse.labyrinth.resource.Resources;
-import name.martingeisse.labyrinth.system.Texture;
 import org.lwjgl.opengl.GL11;
 
 /**
@@ -15,13 +13,13 @@ public class Room {
 
 	private final int width;
 	private final int height;
-	private final byte[] blocks;
+	private final byte[] blockMatrix;
 	private final PlayerSprite playerSprite;
 
 	public Room(int width, int height) {
 		this.width = width;
 		this.height = height;
-		this.blocks = new byte[width * height];
+		this.blockMatrix = new byte[width * height];
 		this.playerSprite = new PlayerSprite(this);
 	}
 
@@ -33,8 +31,8 @@ public class Room {
 		return height;
 	}
 
-	public byte[] getBlocks() {
-		return blocks;
+	public byte[] getBlockMatrix() {
+		return blockMatrix;
 	}
 
 	public PlayerSprite getPlayerSprite() {
@@ -53,23 +51,27 @@ public class Room {
 		return y * width + x;
 	}
 
-	public static byte convertToBlockByte(int block) {
-		if (block != (block & 0xff)) {
-			throw new IllegalArgumentException("invalid block byte: " + block);
+	public static byte convertBlockNumberToBlockByte(int blockNumber) {
+		if (blockNumber != (blockNumber & 0xff)) {
+			throw new IllegalArgumentException("invalid block number: " + blockNumber);
 		}
-		return (byte) block;
+		return (byte) blockNumber;
 	}
 
-	public static int convertFromBlockByte(byte block) {
-		return block & 0xff;
+	public static int convertBlockByteToBlockNumber(byte blockByte) {
+		return blockByte & 0xff;
 	}
 
-	public void setBlock(int x, int y, int block) {
-		blocks[getBlockIndex(x, y)] = convertToBlockByte(block);
+	public void setBlockNumber(int x, int y, int blockNumber) {
+		blockMatrix[getBlockIndex(x, y)] = convertBlockNumberToBlockByte(blockNumber);
 	}
 
-	public int getBlock(int x, int y) {
-		return convertFromBlockByte(blocks[getBlockIndex(x, y)]);
+	public int getBlockNumber(int x, int y) {
+		return convertBlockByteToBlockNumber(blockMatrix[getBlockIndex(x, y)]);
+	}
+
+	public Block getBlock(int x, int y) {
+		return Block.get(getBlockNumber(x, y));
 	}
 
 	public void step() {
@@ -81,12 +83,7 @@ public class Room {
 		GL11.glColor3ub((byte) 255, (byte) 255, (byte) 255);
 		for (int x = 0; x < width; x++) {
 			for (int y = 0; y < height; y++) {
-				int block = convertFromBlockByte(blocks[y * width + x]);
-				Texture texture = Resources.getTexture(block == 0 ? "tile1.png" : "wall1.png");
-				if (texture == null) {
-					continue;
-				}
-				texture.glBindTexture();
+				getBlock(x, y).getTexture().glBindTexture();
 				GL11.glBegin(GL11.GL_QUADS);
 				GL11.glTexCoord2f(0.0f, 1.0f);
 				GL11.glVertex2i(x << 5, y << 5);

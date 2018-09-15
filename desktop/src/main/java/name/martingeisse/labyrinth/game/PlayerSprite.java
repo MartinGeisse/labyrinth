@@ -50,7 +50,7 @@ public class PlayerSprite {
 		this.direction = direction;
 		int newX = playerX + direction.getDeltaX();
 		int newY = playerY + direction.getDeltaY();
-		if (room.isValidPosition(newX, newY) && room.getBlock(newX, newY) == 0) {
+		if (room.isValidPosition(newX, newY) && !room.getBlock(newX, newY).isSolid()) {
 			walking = true;
 			playerX = newX;
 			playerFractionX = -32 * direction.getDeltaX();
