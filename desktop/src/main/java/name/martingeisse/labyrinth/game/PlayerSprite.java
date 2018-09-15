@@ -25,6 +25,34 @@ public class PlayerSprite {
 		this.room = room;
 	}
 
+	public Room getRoom() {
+		return room;
+	}
+
+	public int getPlayerX() {
+		return playerX;
+	}
+
+	public int getPlayerY() {
+		return playerY;
+	}
+
+	public int getPlayerFractionX() {
+		return playerFractionX;
+	}
+
+	public int getPlayerFractionY() {
+		return playerFractionY;
+	}
+
+	public Direction getDirection() {
+		return direction;
+	}
+
+	public boolean isWalking() {
+		return walking;
+	}
+
 	public void step() {
 		if (!walking) {
 			if (Keyboard.isKeyDown(Keyboard.KEY_LEFT)) {

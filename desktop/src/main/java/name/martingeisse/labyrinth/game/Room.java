@@ -4,6 +4,7 @@
  */
 package name.martingeisse.labyrinth.game;
 
+import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 
 /**
@@ -15,6 +16,7 @@ public class Room {
 	private final int height;
 	private final byte[] blockMatrix;
 	private final PlayerSprite playerSprite;
+	private int screenX, screenY;
 
 	public Room(int width, int height) {
 		this.width = width;
@@ -76,9 +78,24 @@ public class Room {
 
 	public void step() {
 		playerSprite.step();
+
+		// make the screen follow the player
+		screenX = (playerSprite.getPlayerX() << 5) + playerSprite.getPlayerFractionX() + 16 - (Display.getWidth() >> 1);
+		if (screenX < 0) {
+			screenX = 0;
+		} else if (screenX + Display.getWidth() > (width << 5)) {
+			screenX = (width << 5) - Display.getWidth();
+		}
+		screenY = (playerSprite.getPlayerY() << 5) + playerSprite.getPlayerFractionY() + 16 - (Display.getHeight() >> 1);
+		if (screenY < 0) {
+			screenY = 0;
+		} else if (screenY + Display.getHeight() > (height << 5)) {
+			screenY = (height << 5) - Display.getHeight();
+		}
 	}
 
 	public void draw() {
+		GL11.glTranslatef(-screenX, -screenY, 0.0f);
 		GL11.glEnable(GL11.GL_TEXTURE_2D);
 		GL11.glColor3ub((byte) 255, (byte) 255, (byte) 255);
 		for (int x = 0; x < width; x++) {

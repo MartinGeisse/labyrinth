@@ -14,7 +14,6 @@ import org.lwjgl.opengl.Util;
 public class Game {
 
 	private Room room;
-	private int screenX, screenY;
 
 	public void step() {
 		if (room != null) {
@@ -28,7 +27,6 @@ public class Game {
 		GL11.glOrtho(0, Display.getWidth(), Display.getHeight(), 0, -1, 1);
 		GL11.glMatrixMode(GL11.GL_MODELVIEW);
 		GL11.glLoadIdentity();
-		GL11.glTranslatef(-screenX, -screenY, 0.0f);
 		GL11.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		GL11.glClear(GL11.GL_COLOR_BUFFER_BIT);
 		if (room != null) {
@@ -44,21 +42,5 @@ public class Game {
 	public void setRoom(Room room) {
 		this.room = room;
 	}
-
-	public int getScreenX() {
-		return screenX;
-	}
-
-	public void setScreenX(int screenX) {
-		this.screenX = screenX;
-	}
-
-	public int getScreenY() {
-		return screenY;
-	}
-
-	public void setScreenY(int screenY) {
-		this.screenY = screenY;
-	}
-
+	
 }

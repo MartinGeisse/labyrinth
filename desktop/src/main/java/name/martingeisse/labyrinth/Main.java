@@ -38,7 +38,7 @@ public class Main {
 
 		// initialize game
 		Game game = new Game();
-		RoomBuilder builder = new RoomBuilder(12, 9);
+		RoomBuilder builder = new RoomBuilder(40, 30);
 		builder.fill(0);
 		builder.roomOutline(1);
 		game.setRoom(builder.getRoom());
