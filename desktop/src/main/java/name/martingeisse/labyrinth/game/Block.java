@@ -14,7 +14,8 @@ public enum Block {
 
 	NOTHING(true),
 	TILE1(false),
-	WALL1(true);
+	WALL1(true),
+	DOOR1(false);
 
 	// avoid recreating this array over and over
 	public static final Block[] TABLE = values();

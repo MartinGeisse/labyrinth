@@ -33,8 +33,16 @@ public class PlayerSprite {
 		return playerX;
 	}
 
+	public void setPlayerX(int playerX) {
+		this.playerX = playerX;
+	}
+
 	public int getPlayerY() {
 		return playerY;
+	}
+
+	public void setPlayerY(int playerY) {
+		this.playerY = playerY;
 	}
 
 	public int getPlayerFractionX() {
@@ -47,6 +55,10 @@ public class PlayerSprite {
 
 	public Direction getDirection() {
 		return direction;
+	}
+
+	public void setDirection(Direction direction) {
+		this.direction = direction;
 	}
 
 	public boolean isWalking() {
@@ -70,6 +82,7 @@ public class PlayerSprite {
 			playerFractionY += 4 * direction.getDeltaY();
 			if (playerFractionX == 0 && playerFractionY == 0) {
 				walking = false;
+				room.checkTriggers();
 			}
 		}
 	}

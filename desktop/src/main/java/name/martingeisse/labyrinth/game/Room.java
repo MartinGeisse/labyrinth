@@ -7,22 +7,41 @@ package name.martingeisse.labyrinth.game;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  */
 public class Room {
 
+	private Game game;
 	private final int width;
 	private final int height;
 	private final byte[] blockMatrix;
 	private final PlayerSprite playerSprite;
 	private int screenX, screenY;
+	private final List<Trigger> triggers = new ArrayList<>();
 
 	public Room(int width, int height) {
 		this.width = width;
 		this.height = height;
 		this.blockMatrix = new byte[width * height];
 		this.playerSprite = new PlayerSprite(this);
+	}
+
+	void bindToGame(Game game) {
+		if (this.game != null && this.game != game) {
+			throw new IllegalStateException("room already bound to game");
+		}
+		this.game = game;
+	}
+
+	public Game getGame() {
+		if (game == null) {
+			throw new IllegalStateException("room not bound to game yet");
+		}
+		return game;
 	}
 
 	public int getWidth() {
@@ -72,12 +91,23 @@ public class Room {
 		return convertBlockByteToBlockNumber(blockMatrix[getBlockIndex(x, y)]);
 	}
 
+	public void setBlock(int x, int y, Block block) {
+		setBlockNumber(x, y, block.ordinal());
+	}
+
 	public Block getBlock(int x, int y) {
 		return Block.get(getBlockNumber(x, y));
 	}
 
+	public void addTrigger(Trigger trigger) {
+		triggers.add(trigger);
+	}
+
 	public void step() {
 		playerSprite.step();
+	}
+
+	public void draw() {
 
 		// make the screen follow the player (TODO assumes fixed size of 640x480, but that's easy to change)
 		if (width <= 20) {
@@ -100,9 +130,8 @@ public class Room {
 				screenY = (height << 5) - Display.getHeight();
 			}
 		}
-	}
 
-	public void draw() {
+		// draw the room
 		GL11.glTranslatef(-screenX, -screenY, 0.0f);
 		GL11.glEnable(GL11.GL_TEXTURE_2D);
 		GL11.glColor3ub((byte) 255, (byte) 255, (byte) 255);
@@ -122,6 +151,13 @@ public class Room {
 			}
 		}
 		playerSprite.draw();
+
+	}
+
+	void checkTriggers() {
+		for (Trigger trigger : triggers) {
+			trigger.check(this);
+		}
 	}
 
 }

@@ -9,6 +9,7 @@ package name.martingeisse.labyrinth;
 import name.martingeisse.labyrinth.game.Game;
 import name.martingeisse.labyrinth.game.Room;
 import name.martingeisse.labyrinth.game.RoomBuilder;
+import name.martingeisse.labyrinth.game.rooms.RoomFactory;
 import name.martingeisse.labyrinth.resource.DefaultResouceLoader;
 import name.martingeisse.labyrinth.resource.DefaultResourceManager;
 import name.martingeisse.labyrinth.resource.Resources;
@@ -38,10 +39,7 @@ public class Main {
 
 		// initialize game
 		Game game = new Game();
-		RoomBuilder builder = new RoomBuilder(19, 14);
-		builder.fill(1);
-		builder.roomOutline(2);
-		game.setRoom(builder.getRoom());
+		game.setRoom(RoomFactory.initial1(true));
 
 		// main loop
 		FrameTimer frameTimer = new FrameTimer(30);

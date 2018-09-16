@@ -5,3 +5,5 @@ https://lanto.itch.io/free-characters
     personajes-lanto.png
 https://opengameart.org/content/lots-of-free-2d-tiles-and-sprites-by-hyptosis
 	hyptosis_tile-art-batch-1.png
+https://opengameart.org/content/tiny-16-basic
+    basictiles.png

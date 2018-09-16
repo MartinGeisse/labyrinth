@@ -45,45 +45,53 @@ public class RoomBuilder {
 		return room.getBlockNumber(x, y);
 	}
 
+	public void setBlock(int x, int y, Block block) {
+		room.setBlock(x, y, block);
+	}
+
+	public Block getBlock(int x, int y) {
+		return room.getBlock(x, y);
+	}
+
 	//
 	// drawing operations
 	//
 
-	public void fill(int blockNumber) {
-		Arrays.fill(room.getBlockMatrix(), (byte) blockNumber);
+	public void fill(Block block) {
+		Arrays.fill(room.getBlockMatrix(), (byte) block.ordinal());
 	}
 
-	public void hline(int x, int y, int length, int blockNumber) {
+	public void hline(int x, int y, int length, Block block) {
 		for (int i = 0; i < length; i++) {
-			room.setBlockNumber(x + i, y, blockNumber);
+			room.setBlock(x + i, y, block);
 		}
 	}
 
-	public void vline(int x, int y, int length, int blockNumber) {
+	public void vline(int x, int y, int length, Block block) {
 		for (int i = 0; i < length; i++) {
-			room.setBlockNumber(x, y + i, blockNumber);
+			room.setBlock(x, y + i, block);
 		}
 	}
 
-	public void roomOutline(int blockNumber) {
-		rectangleOutline(0, 0, room.getWidth(), room.getHeight(), blockNumber);
+	public void roomOutline(Block block) {
+		rectangleOutline(0, 0, room.getWidth(), room.getHeight(), block);
 	}
 
-	public void rectangleOutline(int x, int y, int width, int height, int blockNumber) {
+	public void rectangleOutline(int x, int y, int width, int height, Block block) {
 		for (int i = 0; i < width; i++) {
-			room.setBlockNumber(x + i, y, blockNumber);
-			room.setBlockNumber(x + i, y + height - 1, blockNumber);
+			room.setBlock(x + i, y, block);
+			room.setBlock(x + i, y + height - 1, block);
 		}
 		for (int i = 0; i < height; i++) {
-			room.setBlockNumber(x, y + i, blockNumber);
-			room.setBlockNumber(x + width - 1, y + i, blockNumber);
+			room.setBlock(x, y + i, block);
+			room.setBlock(x + width - 1, y + i, block);
 		}
 	}
 
-	public void rectangleFilled(int x, int y, int width, int height, int blockNumber) {
+	public void rectangleFilled(int x, int y, int width, int height, Block block) {
 		for (int i = 0; i < width; i++) {
 			for (int j = 0; j < height; j++) {
-				room.setBlockNumber(x + i, y + j, blockNumber);
+				room.setBlock(x + i, y + j, block);
 			}
 		}
 	}
