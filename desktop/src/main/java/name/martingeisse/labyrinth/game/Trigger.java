@@ -7,10 +7,11 @@ package name.martingeisse.labyrinth.game;
 /**
  *
  */
-public abstract class Trigger {
+public final class Trigger {
 
 	private int x;
 	private int y;
+	private Callback callback;
 
 	public Trigger() {
 	}
@@ -18,6 +19,16 @@ public abstract class Trigger {
 	public Trigger(int x, int y) {
 		this.x = x;
 		this.y = y;
+	}
+
+	public Trigger(Callback callback) {
+		this.callback = callback;
+	}
+
+	public Trigger(int x, int y, Callback callback) {
+		this.x = x;
+		this.y = y;
+		this.callback = callback;
 	}
 
 	public int getX() {
@@ -36,13 +47,22 @@ public abstract class Trigger {
 		this.y = y;
 	}
 
+	public Callback getCallback() {
+		return callback;
+	}
+
+	public void setCallback(Callback callback) {
+		this.callback = callback;
+	}
+
 	public void check(Room room) {
 		PlayerSprite playerSprite = room.getPlayerSprite();
-		if (playerSprite.getPlayerX() == x && playerSprite.getPlayerY() == y) {
-			onTouch(room);
+		if (playerSprite.getPlayerX() == x && playerSprite.getPlayerY() == y && callback != null) {
+			callback.onTouch(room);
 		}
 	}
 
-	protected abstract void onTouch(Room room);
-
+	public interface Callback {
+		void onTouch(Room room);
+	}
 }

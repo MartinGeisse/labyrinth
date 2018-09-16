@@ -4,7 +4,10 @@
  */
 package name.martingeisse.labyrinth.game;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.function.Supplier;
 
 /**
  *
@@ -12,6 +15,8 @@ import java.util.Arrays;
 public class RoomBuilder {
 
 	private final Room room;
+	private final List<Integer> doorLocations = new ArrayList<>();
+	private final List<Direction> doorDirections = new ArrayList<>();
 
 	public RoomBuilder(int width, int height) {
 		this.room = new Room(width, height);
@@ -94,6 +99,54 @@ public class RoomBuilder {
 				room.setBlock(x + i, y + j, block);
 			}
 		}
+	}
+
+	//
+	// quick helpers
+	//
+
+	/**
+	 * like setBlock, but counts the block as a door (the door order is defined by the order of the calls to this
+	 * method) to quickly define the player's starting position via selectDoor().
+	 * <p>
+	 * The startDirection is the initial direction when entering the room through this door -- the opposite of the
+	 * direction used when going through the door from within this room.
+	 * <p>
+	 * If a trigger callback is specified, a trigger will be placed at the door block with that callback.
+	 */
+	public void setDoor(int x, int y, Block block, Direction startDirection, Trigger.Callback triggerCallback) {
+		setBlock(x, y, block);
+		doorLocations.add(x);
+		doorLocations.add(y);
+		doorDirections.add(startDirection);
+		if (triggerCallback != null) {
+			room.addTrigger(new Trigger(x, y, triggerCallback));
+		}
+	}
+
+	/**
+	 * Like setDoor() above, but specifies a room supplier instead of a generic callback.
+	 */
+	public void setDoor(int x, int y, Block block, Direction startDirection, Supplier<Room> roomSupplier) {
+		setDoor(x, y, block, startDirection, oldRoom -> oldRoom.getGame().setRoom(roomSupplier.get()));
+	}
+
+	/**
+	 * Like setDoor() above, but doesn't take a callback parameter. This is easier since passing null is ambiguous for
+	 * all the overloaded methods.
+	 */
+	public void setDoor(int x, int y, Block block, Direction startDirection) {
+		setDoor(x, y, block, startDirection, (Trigger.Callback) null);
+	}
+
+	// see setDoor()
+	public void selectDoor(int doorIndex) {
+		if (doorIndex < 0 || doorIndex >= doorDirections.size()) {
+			throw new IllegalArgumentException("invalid door index " + doorIndex + " for " + doorDirections.size() + " doors");
+		}
+		room.getPlayerSprite().setPlayerX(doorLocations.get(doorIndex << 1));
+		room.getPlayerSprite().setPlayerY(doorLocations.get((doorIndex << 1) + 1));
+		room.getPlayerSprite().setDirection(doorDirections.get(doorIndex));
 	}
 
 }

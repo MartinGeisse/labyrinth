@@ -38,7 +38,7 @@ public class Main {
 
 		// initialize game
 		Game game = new Game();
-		game.setRoom(RoomFactory.initial1(true));
+		game.setRoom(RoomFactory.start());
 
 		// main loop
 		FrameTimer frameTimer = new FrameTimer(30);

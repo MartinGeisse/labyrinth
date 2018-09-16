@@ -11,49 +11,42 @@ import name.martingeisse.labyrinth.game.*;
  */
 public class RoomFactory {
 
-	public static Room initial1(boolean start) {
+	public static Room start() {
+		return initial1(1);
+	}
+
+	public static Room initial1(int enteringDoor) {
 		RoomBuilder builder = new RoomBuilder(12, 9);
 		builder.fill(Block.TILE1);
 		builder.roomOutline(Block.WALL1);
-		builder.rectangleFilled(5, 2, 5, 5, Block.WALL1);
-		builder.setBlock(7, 6, Block.DOOR1);
-		Room room = builder.getRoom();
-		room.getPlayerSprite().setPlayerX(start ? 3 : 7);
-		room.getPlayerSprite().setPlayerY(start ? 3 : 6);
-		room.getPlayerSprite().setDirection(Direction.EAST);
-		room.addTrigger(new Trigger(7, 6) {
-			@Override
-			protected void onTouch(Room room) {
-				room.getGame().setRoom(initial2(0));
-			}
-		});
-		return room;
+		builder.rectangleFilled(6, 3, 3, 3, Block.WALL1);
+		builder.setDoor(7, 5, Block.DOOR1, Direction.SOUTH, () -> initial2(0));
+		builder.setDoor(3, 3, Block.TILE1, Direction.EAST, (Trigger.Callback) null);
+		builder.selectDoor(enteringDoor);
+		return builder.getRoom();
 	}
 
 	public static Room initial2(int enteringDoor) {
 		RoomBuilder builder = new RoomBuilder(15, 9);
 		builder.fill(Block.TILE1);
 		builder.roomOutline(Block.WALL1);
-		builder.rectangleFilled(2, 2, 5, 5, Block.WALL1);
-		builder.setBlock(4, 6, Block.DOOR1);
-		builder.rectangleFilled(8, 2, 5, 5, Block.WALL1);
-		builder.setBlock(10, 6, Block.DOOR1);
-		Room room = builder.getRoom();
-		room.getPlayerSprite().setPlayerX(enteringDoor == 0 ? 10 : 4);
-		room.getPlayerSprite().setPlayerY(6);
-		room.getPlayerSprite().setDirection(Direction.EAST);
-		room.addTrigger(new Trigger(4, 6) {
-			@Override
-			protected void onTouch(Room room) {
-			}
-		});
-		room.addTrigger(new Trigger(10, 6) {
-			@Override
-			protected void onTouch(Room room) {
-				room.getGame().setRoom(initial1(false));
-			}
-		});
-		return room;
+		builder.rectangleFilled(3, 3, 3, 3, Block.WALL1);
+		builder.rectangleFilled(9, 3, 3, 3, Block.WALL1);
+		builder.setDoor(10, 5, Block.DOOR1, Direction.SOUTH, () -> initial1(0));
+		builder.setDoor(4, 5, Block.DOOR1, Direction.SOUTH, () -> initial3(0));
+		builder.selectDoor(enteringDoor);
+		return builder.getRoom();
+	}
+
+	public static Room initial3(int enteringDoor) {
+		RoomBuilder builder = new RoomBuilder(30, 3);
+		builder.fill(Block.TILE1);
+		builder.roomOutline(Block.WALL1);
+		builder.setDoor(15, 0, Block.DOOR1, Direction.SOUTH, () -> initial2(1));
+		builder.setDoor(1, 1, Block.DOOR1, Direction.EAST);
+		builder.setDoor(28, 1, Block.DOOR1, Direction.WEST);
+		builder.selectDoor(enteringDoor);
+		return builder.getRoom();
 	}
 
 }
