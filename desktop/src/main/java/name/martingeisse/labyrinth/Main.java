@@ -7,9 +7,8 @@
 package name.martingeisse.labyrinth;
 
 import name.martingeisse.labyrinth.game.Game;
-import name.martingeisse.labyrinth.game.Room;
-import name.martingeisse.labyrinth.game.RoomBuilder;
 import name.martingeisse.labyrinth.game.rooms.RoomFactory;
+import name.martingeisse.labyrinth.input.InputStrategyHolder;
 import name.martingeisse.labyrinth.resource.DefaultResouceLoader;
 import name.martingeisse.labyrinth.resource.DefaultResourceManager;
 import name.martingeisse.labyrinth.resource.Resources;
@@ -43,7 +42,7 @@ public class Main {
 
 		// main loop
 		FrameTimer frameTimer = new FrameTimer(30);
-		while (!Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {
+		while (!InputStrategyHolder.INPUT_STRATEGY.isQuitPressed()) {
 
 			// synchronize with OS
 			Display.processMessages();

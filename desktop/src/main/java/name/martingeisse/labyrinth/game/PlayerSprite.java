@@ -4,8 +4,8 @@
  */
 package name.martingeisse.labyrinth.game;
 
+import name.martingeisse.labyrinth.input.InputStrategyHolder;
 import name.martingeisse.labyrinth.resource.Resources;
-import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 
 /**
@@ -67,14 +67,9 @@ public class PlayerSprite {
 
 	public void step() {
 		if (!walking) {
-			if (Keyboard.isKeyDown(Keyboard.KEY_LEFT)) {
-				tryStartWalking(Direction.WEST);
-			} else if (Keyboard.isKeyDown(Keyboard.KEY_RIGHT)) {
-				tryStartWalking(Direction.EAST);
-			} else if (Keyboard.isKeyDown(Keyboard.KEY_UP)) {
-				tryStartWalking(Direction.NORTH);
-			} else if (Keyboard.isKeyDown(Keyboard.KEY_DOWN)) {
-				tryStartWalking(Direction.SOUTH);
+			Direction inputDirection = InputStrategyHolder.INPUT_STRATEGY.getInputDirection();
+			if (inputDirection != null) {
+				tryStartWalking(inputDirection);
 			}
 		}
 		if (walking) {
