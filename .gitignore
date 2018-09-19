@@ -1,5 +1,10 @@
 .DS_Store
+.gradle
+.idea
+.externalNativeBuild
+*.iml
 /desktop/out
-/desktop/.gradle
 /desktop/.idea
-/desktop/desktop.iml
+/android/local.properties
+/android/build
+/android/captures
