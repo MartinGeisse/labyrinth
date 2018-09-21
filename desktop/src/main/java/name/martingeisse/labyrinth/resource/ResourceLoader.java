@@ -6,7 +6,7 @@
 
 package name.martingeisse.labyrinth.resource;
 
-import name.martingeisse.labyrinth.system.Texture;
+import name.martingeisse.labyrinth.system.lwjgl.LwjglTexture;
 import org.newdawn.slick.openal.Audio;
 
 import java.io.IOException;
@@ -23,7 +23,7 @@ public interface ResourceLoader {
 	 * @return the texture
 	 * @throws IOException on I/O errors
 	 */
-	Texture loadTexture(final String filename) throws IOException;
+	LwjglTexture loadTexture(final String filename) throws IOException;
 
 	/**
 	 * Loads a sound.

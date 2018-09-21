@@ -6,7 +6,7 @@
 
 package name.martingeisse.labyrinth.resource;
 
-import name.martingeisse.labyrinth.system.Texture;
+import name.martingeisse.labyrinth.system.lwjgl.LwjglTexture;
 import org.newdawn.slick.openal.Audio;
 
 import java.io.IOException;
@@ -26,7 +26,7 @@ public final class DefaultResourceManager implements ResourceManager {
 	/**
 	 * the textures
 	 */
-	private final Map<String, Texture> textures = new HashMap<>();
+	private final Map<String, LwjglTexture> textures = new HashMap<>();
 
 	/**
 	 * the sounds
@@ -45,8 +45,8 @@ public final class DefaultResourceManager implements ResourceManager {
 	 * @see game.engine.resource.ResourceManager#getTexture(java.lang.String)
 	 */
 	@Override
-	public Texture getTexture(String name) {
-		Texture texture = textures.get(name);
+	public LwjglTexture getTexture(String name) {
+		LwjglTexture texture = textures.get(name);
 		if (texture == null) {
 			try {
 				texture = loader.loadTexture(name);

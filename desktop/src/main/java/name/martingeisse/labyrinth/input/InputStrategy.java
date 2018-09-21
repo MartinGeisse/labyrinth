@@ -7,6 +7,8 @@ import name.martingeisse.labyrinth.game.Direction;
  */
 public interface InputStrategy {
 
+	InputStrategy SELECTED = new LwjglKeyboardInputStrategy();
+
 	// the direction currently input, or null if none
 	Direction getInputDirection();
 

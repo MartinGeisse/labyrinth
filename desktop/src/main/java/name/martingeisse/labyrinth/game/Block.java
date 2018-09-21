@@ -5,7 +5,7 @@
 package name.martingeisse.labyrinth.game;
 
 import name.martingeisse.labyrinth.resource.Resources;
-import name.martingeisse.labyrinth.system.Texture;
+import name.martingeisse.labyrinth.system.lwjgl.LwjglTexture;
 
 /**
  *
@@ -30,7 +30,7 @@ public enum Block {
 		return solid;
 	}
 
-	public Texture getTexture() {
+	public LwjglTexture getTexture() {
 		return Resources.getTexture(name().toLowerCase() + ".png");
 	}
 

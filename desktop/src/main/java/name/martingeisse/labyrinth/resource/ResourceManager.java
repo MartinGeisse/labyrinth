@@ -6,7 +6,7 @@
 
 package name.martingeisse.labyrinth.resource;
 
-import name.martingeisse.labyrinth.system.Texture;
+import name.martingeisse.labyrinth.system.lwjgl.LwjglTexture;
 import org.newdawn.slick.openal.Audio;
 
 /**
@@ -20,7 +20,7 @@ public interface ResourceManager {
 	 * @param name the name of the texture
 	 * @return the texture
 	 */
-	Texture getTexture(final String name);
+	LwjglTexture getTexture(final String name);
 
 	/**
 	 * Returns a sound by name.

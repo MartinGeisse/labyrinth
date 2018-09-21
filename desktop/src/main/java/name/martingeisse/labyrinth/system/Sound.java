@@ -3,5 +3,5 @@ package name.martingeisse.labyrinth.system;
 /**
  *
  */
-public interface Texture {
+public interface Sound {
 }

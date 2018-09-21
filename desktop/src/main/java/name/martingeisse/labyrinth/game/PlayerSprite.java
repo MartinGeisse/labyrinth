@@ -4,7 +4,7 @@
  */
 package name.martingeisse.labyrinth.game;
 
-import name.martingeisse.labyrinth.input.InputStrategyHolder;
+import name.martingeisse.labyrinth.input.InputStrategy;
 import name.martingeisse.labyrinth.resource.Resources;
 import org.lwjgl.opengl.GL11;
 
@@ -67,7 +67,7 @@ public class PlayerSprite {
 
 	public void step() {
 		if (!walking) {
-			Direction inputDirection = InputStrategyHolder.INPUT_STRATEGY.getInputDirection();
+			Direction inputDirection = InputStrategy.SELECTED.getInputDirection();
 			if (inputDirection != null) {
 				tryStartWalking(inputDirection);
 			}

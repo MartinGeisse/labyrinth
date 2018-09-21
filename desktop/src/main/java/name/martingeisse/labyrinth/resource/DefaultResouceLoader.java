@@ -6,7 +6,7 @@
 
 package name.martingeisse.labyrinth.resource;
 
-import name.martingeisse.labyrinth.system.Texture;
+import name.martingeisse.labyrinth.system.lwjgl.LwjglTexture;
 import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.openal.Audio;
 import org.newdawn.slick.openal.AudioLoader;
@@ -35,9 +35,9 @@ public final class DefaultResouceLoader implements ResourceLoader {
 	}
 
 	@Override
-	public Texture loadTexture(String filename) throws IOException {
+	public LwjglTexture loadTexture(String filename) throws IOException {
 		try (InputStream inputStream = new FileInputStream(resolveFile("drawable", filename))) {
-			return new Texture(InternalTextureLoader.get().getTexture(inputStream, filename, true, GL11.GL_LINEAR));
+			return new LwjglTexture(InternalTextureLoader.get().getTexture(inputStream, filename, true, GL11.GL_LINEAR));
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}

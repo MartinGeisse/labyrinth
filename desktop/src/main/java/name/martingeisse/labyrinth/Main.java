@@ -8,12 +8,12 @@ package name.martingeisse.labyrinth;
 
 import name.martingeisse.labyrinth.game.Game;
 import name.martingeisse.labyrinth.game.rooms.RoomFactory;
-import name.martingeisse.labyrinth.input.InputStrategyHolder;
+import name.martingeisse.labyrinth.input.InputStrategy;
 import name.martingeisse.labyrinth.resource.DefaultResouceLoader;
 import name.martingeisse.labyrinth.resource.DefaultResourceManager;
 import name.martingeisse.labyrinth.resource.Resources;
 import name.martingeisse.labyrinth.system.FrameTimer;
-import name.martingeisse.labyrinth.system.Launcher;
+import name.martingeisse.labyrinth.system.lwjgl.Launcher;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
@@ -42,7 +42,7 @@ public class Main {
 
 		// main loop
 		FrameTimer frameTimer = new FrameTimer(30);
-		while (!InputStrategyHolder.INPUT_STRATEGY.isQuitPressed()) {
+		while (!InputStrategy.SELECTED.isQuitPressed()) {
 
 			// synchronize with OS
 			Display.processMessages();
