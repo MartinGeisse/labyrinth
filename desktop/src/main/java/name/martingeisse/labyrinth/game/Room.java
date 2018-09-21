@@ -4,9 +4,7 @@
  */
 package name.martingeisse.labyrinth.game;
 
-import name.martingeisse.labyrinth.system.lwjgl.LwjglTexture;
-import org.lwjgl.opengl.Display;
-import org.lwjgl.opengl.GL11;
+import name.martingeisse.labyrinth.system.Renderer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -111,44 +109,34 @@ public class Room {
 	public void draw() {
 
 		// make the screen follow the player (TODO assumes fixed size of 640x480, but that's easy to change)
+		int displayWidth = Renderer.Holder.INSTANCE.getWidth();
+		int displayHeight = Renderer.Holder.INSTANCE.getHeight();
 		if (width <= 20) {
-			screenX = -((Display.getWidth() - (width << 5)) >> 1);
+			screenX = -((displayWidth - (width << 5)) >> 1);
 		} else {
-			screenX = (playerSprite.getPlayerX() << 5) + playerSprite.getPlayerFractionX() + 16 - (Display.getWidth() >> 1);
+			screenX = (playerSprite.getPlayerX() << 5) + playerSprite.getPlayerFractionX() + 16 - (displayWidth >> 1);
 			if (screenX < 0) {
 				screenX = 0;
-			} else if (screenX + Display.getWidth() > (width << 5)) {
-				screenX = (width << 5) - Display.getWidth();
+			} else if (screenX + displayWidth > (width << 5)) {
+				screenX = (width << 5) - displayWidth;
 			}
 		}
 		if (height <= 15) {
-			screenY = -((Display.getHeight() - (height << 5)) >> 1);
+			screenY = -((displayHeight - (height << 5)) >> 1);
 		} else {
-			screenY = (playerSprite.getPlayerY() << 5) + playerSprite.getPlayerFractionY() + 16 - (Display.getHeight() >> 1);
+			screenY = (playerSprite.getPlayerY() << 5) + playerSprite.getPlayerFractionY() + 16 - (displayHeight >> 1);
 			if (screenY < 0) {
 				screenY = 0;
-			} else if (screenY + Display.getHeight() > (height << 5)) {
-				screenY = (height << 5) - Display.getHeight();
+			} else if (screenY + displayHeight > (height << 5)) {
+				screenY = (height << 5) - displayHeight;
 			}
 		}
 
 		// draw the room
-		GL11.glTranslatef(-screenX, -screenY, 0.0f);
-		GL11.glEnable(GL11.GL_TEXTURE_2D);
-		GL11.glColor3ub((byte) 255, (byte) 255, (byte) 255);
+		Renderer.Holder.INSTANCE.prepareDrawRoom(screenX, screenY);
 		for (int x = 0; x < width; x++) {
 			for (int y = 0; y < height; y++) {
-				((LwjglTexture)getBlock(x, y).getTexture()).glBindTexture();
-				GL11.glBegin(GL11.GL_QUADS);
-				GL11.glTexCoord2f(0.0f, 1.0f);
-				GL11.glVertex2i(x << 5, y << 5);
-				GL11.glTexCoord2f(1.0f, 1.0f);
-				GL11.glVertex2i((x + 1) << 5, y << 5);
-				GL11.glTexCoord2f(1.0f, 0.0f);
-				GL11.glVertex2i((x + 1) << 5, (y + 1) << 5);
-				GL11.glTexCoord2f(0.0f, 0.0f);
-				GL11.glVertex2i(x << 5, (y + 1) << 5);
-				GL11.glEnd();
+				Renderer.Holder.INSTANCE.drawBlockmapCell(x, y, getBlock(x, y).getTexture());
 			}
 		}
 		playerSprite.draw();
