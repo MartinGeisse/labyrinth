@@ -5,13 +5,15 @@
 package name.martingeisse.labyrinth.game;
 
 import name.martingeisse.labyrinth.system.InputStrategy;
-import name.martingeisse.labyrinth.system.lwjgl.resource.Resources;
-import org.lwjgl.opengl.GL11;
+import name.martingeisse.labyrinth.system.Renderer;
+import name.martingeisse.labyrinth.system.Texture;
 
 /**
  *
  */
 public class PlayerSprite {
+
+	private static Texture[][] textures;
 
 	private final Room room;
 	private int playerX = 3;
@@ -99,21 +101,12 @@ public class PlayerSprite {
 		int anchorX = (playerX << 5) + playerFractionX;
 		int anchorY = (playerY << 5) + playerFractionY;
 		int frame = (walking ? ((((playerFractionX + playerFractionY) >> 2) + 100) % 3) : 0);
-		Resources.getTexture("player_" + direction.name().toLowerCase() + '_' + frame + ".png").glBindTexture();
-		GL11.glEnable(GL11.GL_TEXTURE_2D);
-		GL11.glColor3ub((byte) 255, (byte) 255, (byte) 255);
-		GL11.glEnable(GL11.GL_BLEND);
-		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-		GL11.glBegin(GL11.GL_QUADS);
-		GL11.glTexCoord2f(0.0f, 1.0f);
-		GL11.glVertex2i(anchorX, anchorY);
-		GL11.glTexCoord2f(1.0f, 1.0f);
-		GL11.glVertex2i(anchorX + 32, anchorY);
-		GL11.glTexCoord2f(1.0f, 0.0f);
-		GL11.glVertex2i(anchorX + 32, anchorY + 32);
-		GL11.glTexCoord2f(0.0f, 0.0f);
-		GL11.glVertex2i(anchorX, anchorY + 32);
-		GL11.glEnd();
+		Texture texture = textures[direction.ordinal()][frame];
+		Renderer.Holder.INSTANCE.drawPlayerSprite(anchorX, anchorY, texture);
+	}
+
+	public static void setTextures(Texture[][] textures) {
+		PlayerSprite.textures = textures;
 	}
 
 }
