@@ -4,8 +4,7 @@
  */
 package name.martingeisse.labyrinth.game;
 
-import name.martingeisse.labyrinth.resource.Resources;
-import name.martingeisse.labyrinth.system.lwjgl.LwjglTexture;
+import name.martingeisse.labyrinth.system.Texture;
 
 /**
  *
@@ -21,6 +20,7 @@ public enum Block {
 	public static final Block[] TABLE = values();
 
 	private final boolean solid;
+	private Texture texture;
 
 	Block(boolean solid) {
 		this.solid = solid;
@@ -30,12 +30,24 @@ public enum Block {
 		return solid;
 	}
 
-	public LwjglTexture getTexture() {
-		return Resources.getTexture(name().toLowerCase() + ".png");
+	public Texture getTexture() {
+		return texture;
+	}
+
+	public void setTexture(Texture texture) {
+		this.texture = texture;
 	}
 
 	public static Block get(int blockNumber) {
 		return TABLE[blockNumber];
+	}
+
+	public static void checkTexturesLoaded() {
+		for (Block block : values()) {
+			if (block.texture == null) {
+				throw new IllegalStateException("missing block texture");
+			}
+		}
 	}
 
 }

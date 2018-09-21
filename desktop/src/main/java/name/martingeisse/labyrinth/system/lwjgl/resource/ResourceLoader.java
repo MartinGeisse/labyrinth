@@ -4,7 +4,7 @@
  * This file is distributed under the terms of the MIT license.
  */
 
-package name.martingeisse.labyrinth.resource;
+package name.martingeisse.labyrinth.system.lwjgl.resource;
 
 import name.martingeisse.labyrinth.system.lwjgl.LwjglTexture;
 import org.newdawn.slick.openal.Audio;

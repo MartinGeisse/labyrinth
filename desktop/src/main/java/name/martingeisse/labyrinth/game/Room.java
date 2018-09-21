@@ -4,6 +4,7 @@
  */
 package name.martingeisse.labyrinth.game;
 
+import name.martingeisse.labyrinth.system.lwjgl.LwjglTexture;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 
@@ -137,7 +138,7 @@ public class Room {
 		GL11.glColor3ub((byte) 255, (byte) 255, (byte) 255);
 		for (int x = 0; x < width; x++) {
 			for (int y = 0; y < height; y++) {
-				getBlock(x, y).getTexture().glBindTexture();
+				((LwjglTexture)getBlock(x, y).getTexture()).glBindTexture();
 				GL11.glBegin(GL11.GL_QUADS);
 				GL11.glTexCoord2f(0.0f, 1.0f);
 				GL11.glVertex2i(x << 5, y << 5);

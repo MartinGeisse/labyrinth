@@ -13,5 +13,5 @@ public class LwjglSound implements Sound {
 	public LwjglSound(Audio audio) {
 		this.audio = audio;
 	}
-	
+
 }

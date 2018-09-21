@@ -15,6 +15,10 @@ public class Game {
 
 	private Room room;
 
+	public Game() {
+		Block.checkTexturesLoaded();
+	}
+
 	public void step() {
 		if (room != null) {
 			room.step();

@@ -4,16 +4,17 @@
  * This file is distributed under the terms of the MIT license.
  */
 
-package name.martingeisse.labyrinth;
+package name.martingeisse.labyrinth.system.lwjgl;
 
+import name.martingeisse.labyrinth.game.Block;
 import name.martingeisse.labyrinth.game.Game;
 import name.martingeisse.labyrinth.game.rooms.RoomFactory;
-import name.martingeisse.labyrinth.input.InputStrategy;
-import name.martingeisse.labyrinth.resource.DefaultResouceLoader;
-import name.martingeisse.labyrinth.resource.DefaultResourceManager;
-import name.martingeisse.labyrinth.resource.Resources;
 import name.martingeisse.labyrinth.system.FrameTimer;
-import name.martingeisse.labyrinth.system.lwjgl.Launcher;
+import name.martingeisse.labyrinth.system.InputStrategy;
+import name.martingeisse.labyrinth.system.Renderer;
+import name.martingeisse.labyrinth.system.lwjgl.resource.DefaultResouceLoader;
+import name.martingeisse.labyrinth.system.lwjgl.resource.DefaultResourceManager;
+import name.martingeisse.labyrinth.system.lwjgl.resource.Resources;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
@@ -21,7 +22,7 @@ import org.lwjgl.opengl.Display;
 /**
  * The main class.
  */
-public class Main {
+public class LwjglMain {
 
 	/**
 	 * The main method.
@@ -34,7 +35,14 @@ public class Main {
 		// initialize system
 		Launcher launcher = new Launcher(640, 480, false);
 		launcher.launch();
+		Renderer.Holder.INSTANCE = new LwjglRenderer();
+		InputStrategy.Holder.INSTANCE = new LwjglKeyboardInputStrategy();
+
+		// initialize resources
 		Resources.setResourceManager(new DefaultResourceManager(new DefaultResouceLoader()));
+		for (Block block : Block.values()) {
+			block.setTexture(Resources.getTexture(block.name().toLowerCase() + ".png"));
+		}
 
 		// initialize game
 		Game game = new Game();
@@ -42,7 +50,7 @@ public class Main {
 
 		// main loop
 		FrameTimer frameTimer = new FrameTimer(30);
-		while (!InputStrategy.SELECTED.isQuitPressed()) {
+		while (!InputStrategy.Holder.INSTANCE.isQuitPressed()) {
 
 			// synchronize with OS
 			Display.processMessages();
