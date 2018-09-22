@@ -108,27 +108,29 @@ public class Room {
 
 	public void draw() {
 
-		// make the screen follow the player (TODO assumes fixed size of 640x480, but that's easy to change)
+		// make the screen follow the player
 		int displayWidth = Renderer.Holder.INSTANCE.getWidth();
 		int displayHeight = Renderer.Holder.INSTANCE.getHeight();
-		if (width <= 20) {
-			screenX = -((displayWidth - (width << 5)) >> 1);
+		int widthInPixels = width << 5;
+		int heightInPixels = height << 5;
+		if (widthInPixels <= displayWidth) {
+			screenX = -((displayWidth - widthInPixels) >> 1);
 		} else {
 			screenX = (playerSprite.getPlayerX() << 5) + playerSprite.getPlayerFractionX() + 16 - (displayWidth >> 1);
 			if (screenX < 0) {
 				screenX = 0;
-			} else if (screenX + displayWidth > (width << 5)) {
-				screenX = (width << 5) - displayWidth;
+			} else if (screenX + displayWidth > widthInPixels) {
+				screenX = widthInPixels - displayWidth;
 			}
 		}
-		if (height <= 15) {
-			screenY = -((displayHeight - (height << 5)) >> 1);
+		if (heightInPixels <= displayHeight) {
+			screenY = -((displayHeight - heightInPixels) >> 1);
 		} else {
 			screenY = (playerSprite.getPlayerY() << 5) + playerSprite.getPlayerFractionY() + 16 - (displayHeight >> 1);
 			if (screenY < 0) {
 				screenY = 0;
-			} else if (screenY + displayHeight > (height << 5)) {
-				screenY = (height << 5) - displayHeight;
+			} else if (screenY + displayHeight > heightInPixels) {
+				screenY = heightInPixels - displayHeight;
 			}
 		}
 

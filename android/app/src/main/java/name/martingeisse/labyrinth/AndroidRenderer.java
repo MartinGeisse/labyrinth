@@ -3,6 +3,7 @@ package name.martingeisse.labyrinth;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
+import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.graphics.RectF;
 
@@ -24,6 +25,7 @@ public class AndroidRenderer implements Renderer {
         // passing null here does NOT work, contrary to the documentation.
         // see https://issuetracker.google.com/issues/36983429
         canvas.setMatrix(new Matrix());
+        canvas.scale(2.0f, 2.0f);
     }
 
     @Override
@@ -37,12 +39,12 @@ public class AndroidRenderer implements Renderer {
 
     @Override
     public int getWidth() {
-        return canvas.getWidth();
+        return canvas.getWidth() / 2;
     }
 
     @Override
     public int getHeight() {
-        return canvas.getHeight();
+        return canvas.getHeight() / 2;
     }
 
     @Override

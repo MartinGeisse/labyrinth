@@ -3,6 +3,7 @@ package name.martingeisse.labyrinth;
 import android.content.Context;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
@@ -26,6 +27,7 @@ public class MainView extends View {
 
     public MainView(Context context) {
         super(context);
+        setBackgroundColor(Color.parseColor("#000000"));
         handler = new Handler();
 
         // initialize system abstraction layer
