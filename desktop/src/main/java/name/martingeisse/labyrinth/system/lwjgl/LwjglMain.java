@@ -10,7 +10,7 @@ import name.martingeisse.labyrinth.game.Block;
 import name.martingeisse.labyrinth.game.Direction;
 import name.martingeisse.labyrinth.game.Game;
 import name.martingeisse.labyrinth.game.PlayerSprite;
-import name.martingeisse.labyrinth.game.rooms.RoomFactory;
+import name.martingeisse.labyrinth.game.rooms.RoomFactories;
 import name.martingeisse.labyrinth.system.FrameTimer;
 import name.martingeisse.labyrinth.system.InputStrategy;
 import name.martingeisse.labyrinth.system.Renderer;
@@ -60,11 +60,11 @@ public class LwjglMain {
 
 		// initialize game
 		Game game = new Game();
-		game.setRoom(RoomFactory.start());
+		game.setRoom(RoomFactories.startRoom.buildRoom(RoomFactories.startRoomInitialDoor));
 
 		// main loop
 		FrameTimer frameTimer = new FrameTimer(30);
-		while (!InputStrategy.Holder.INSTANCE.isQuitPressed()) {
+		while (!Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {
 
 			// synchronize with OS
 			Display.processMessages();

@@ -2,12 +2,16 @@
  * Copyright (c) 2018 Martin Geisse
  * This file is distributed under the terms of the MIT license.
  */
-package name.martingeisse.labyrinth.game;
+package name.martingeisse.labyrinth.game.rooms;
+
+import name.martingeisse.labyrinth.game.Block;
+import name.martingeisse.labyrinth.game.Direction;
+import name.martingeisse.labyrinth.game.Room;
+import name.martingeisse.labyrinth.game.Trigger;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.function.Supplier;
 
 /**
  *
@@ -127,8 +131,13 @@ public class RoomBuilder {
 	/**
 	 * Like setDoor() above, but specifies a room supplier instead of a generic callback.
 	 */
-	public void setDoor(int x, int y, Block block, Direction startDirection, Supplier<Room> roomSupplier) {
-		setDoor(x, y, block, startDirection, oldRoom -> oldRoom.getGame().setRoom(roomSupplier.get()));
+	public void setDoor(int x, int y, Block block, Direction startDirection, RoomFactory roomFactory, int enteringDoor) {
+		setDoor(x, y, block, startDirection, new Trigger.Callback() {
+			@Override
+			public void onTouch(Room oldRoom) {
+				oldRoom.getGame().setRoom(roomFactory.buildRoom(enteringDoor));
+			}
+		});
 	}
 
 	/**

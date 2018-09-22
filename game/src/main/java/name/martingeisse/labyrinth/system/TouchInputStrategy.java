@@ -21,7 +21,7 @@ import name.martingeisse.labyrinth.game.Direction;
  * <p>
  * Replace the equality by >= to allow greater absolute x values.
  */
-public abstract class TouchInputStrategy implements InputStrategy {
+public class TouchInputStrategy implements InputStrategy {
 
 	private static final float WIDENESS = 0.8f;
 	private static final float ONE_BY_WIDENESS_SQUARED = 1.0f / (WIDENESS * WIDENESS);
@@ -29,13 +29,15 @@ public abstract class TouchInputStrategy implements InputStrategy {
 	private final TouchInputSource source;
 	private final float minimumDelta;
 	private final float minimumDeltaSquared;
+	private final boolean positiveYIsDown;
 	private boolean baseInitialized = false;
 	private float baseX, baseY;
 
-	public TouchInputStrategy(TouchInputSource source, float minimumDelta) {
+	public TouchInputStrategy(TouchInputSource source, float minimumDelta, boolean positiveYIsDown) {
 		this.source = source;
 		this.minimumDelta = minimumDelta;
 		this.minimumDeltaSquared = minimumDelta * minimumDelta;
+		this.positiveYIsDown = positiveYIsDown;
 	}
 
 	@Override
@@ -57,7 +59,7 @@ public abstract class TouchInputStrategy implements InputStrategy {
 			return (dx > 0 ? Direction.EAST : Direction.WEST);
 		}
 		if (checkHyperbola(dy, dx)) {
-			return (dy > 0 ? Direction.NORTH : Direction.SOUTH);
+			return (((dy > 0) ^ positiveYIsDown) ? Direction.NORTH : Direction.SOUTH);
 		}
 		return null;
 	}

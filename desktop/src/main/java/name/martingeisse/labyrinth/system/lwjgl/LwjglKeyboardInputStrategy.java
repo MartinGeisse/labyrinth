@@ -28,9 +28,4 @@ public class LwjglKeyboardInputStrategy implements InputStrategy {
 		}
 	}
 
-	@Override
-	public boolean isQuitPressed() {
-		return Keyboard.isKeyDown(Keyboard.KEY_ESCAPE);
-	}
-
 }

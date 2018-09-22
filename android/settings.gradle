@@ -1,1 +1,3 @@
 include ':app'
+include ':game'
+project(':game').projectDir = new File(settingsDir, '../game')

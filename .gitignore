@@ -3,6 +3,8 @@
 .idea
 .externalNativeBuild
 *.iml
+/game/build
+/game/out
 /desktop/out
 /desktop/.idea
 /android/local.properties
