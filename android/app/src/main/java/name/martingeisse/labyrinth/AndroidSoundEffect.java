@@ -20,8 +20,8 @@ public class AndroidSoundEffect implements SoundEffect {
     }
 
     @Override
-    public void loop() {
-        soundPool.play(soundId, 1.0f, 1.0f, 0, -1, 1.0f);
+    public int loop() {
+        return soundPool.play(soundId, 1.0f, 1.0f, 0, -1, 1.0f);
     }
 
 }

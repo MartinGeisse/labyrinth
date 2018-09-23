@@ -10,15 +10,16 @@ import android.media.AudioManager;
 import android.media.SoundPool;
 import android.os.Build;
 import android.os.Handler;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+
+import java.io.InputStream;
+import java.io.OutputStream;
 
 import name.martingeisse.labyrinth.game.Block;
 import name.martingeisse.labyrinth.game.Direction;
 import name.martingeisse.labyrinth.game.Game;
 import name.martingeisse.labyrinth.game.PlayerSprite;
-import name.martingeisse.labyrinth.game.rooms.RoomFactories;
 import name.martingeisse.labyrinth.system.InputStrategy;
 import name.martingeisse.labyrinth.system.Renderer;
 import name.martingeisse.labyrinth.system.SoundEffects;
@@ -75,31 +76,12 @@ public class MainView extends View {
             public void onLoadComplete(SoundPool soundPool, int sampleId, int status) {
                 soundsLoaded++;
                 if (soundsLoaded == 2) {
-                    startGame();
+                    // TODO startGame();
                 }
             }
         });
         SoundEffects.background1 = loadSound(R.raw.atmoseerie02);
         SoundEffects.door = loadSound(R.raw.door);
-
-    }
-
-    private void startGame() {
-
-        SoundEffects.background1.loop();
-
-        game = new Game();
-        game.setRoom(RoomFactories.startRoom.buildRoom(RoomFactories.startRoomInitialDoor));
-
-        frameRunnable = new Runnable() {
-            @Override
-            public void run() {
-                game.step();
-                invalidate();
-                handler.postDelayed(this, 30);
-            }
-        };
-        handler.post(frameRunnable);
 
     }
 
@@ -137,6 +119,36 @@ public class MainView extends View {
     private AndroidSoundEffect loadSound(int resourceId) {
         int soundId = mainSoundPool.load(getContext(), resourceId, 0);
         return new AndroidSoundEffect(mainSoundPool, soundId);
+    }
+
+    public void startGame(InputStream saveStream) {
+
+        // initialize the game
+        if (SoundEffects.backgroundStreamId >= 0) {
+            mainSoundPool.stop(SoundEffects.backgroundStreamId);
+            SoundEffects.backgroundStreamId = -1;
+        }
+        SoundEffects.backgroundStreamId = SoundEffects.background1.loop();
+        game = new Game(saveStream);
+
+        // start the game loop
+        if (handler != null && frameRunnable != null) {
+            handler.removeCallbacks(frameRunnable);
+        }
+        frameRunnable = new Runnable() {
+            @Override
+            public void run() {
+                game.step();
+                invalidate();
+                handler.postDelayed(this, 30);
+            }
+        };
+        handler.post(frameRunnable);
+
+    }
+
+    public void saveGame(OutputStream saveStream) {
+        game.save(saveStream);
     }
 
     @Override

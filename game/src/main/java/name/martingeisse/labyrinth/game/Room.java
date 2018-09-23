@@ -6,6 +6,8 @@ package name.martingeisse.labyrinth.game;
 
 import name.martingeisse.labyrinth.system.Renderer;
 
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,6 +29,14 @@ public class Room {
 		this.height = height;
 		this.blockMatrix = new byte[width * height];
 		this.playerSprite = new PlayerSprite(this);
+	}
+
+	public Room(InputStream saveStream) {
+		throw new UnsupportedOperationException("not yet implemented");
+	}
+
+	public void save(OutputStream saveStream) {
+		throw new UnsupportedOperationException("not yet implemented");
 	}
 
 	void bindToGame(Game game) {

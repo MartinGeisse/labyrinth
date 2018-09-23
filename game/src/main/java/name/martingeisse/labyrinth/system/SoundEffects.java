@@ -3,6 +3,7 @@ package name.martingeisse.labyrinth.system;
 public final class SoundEffects {
 
     public static SoundEffect background1;
+    public static int backgroundStreamId = -1;
 
     public static SoundEffect door;
 
