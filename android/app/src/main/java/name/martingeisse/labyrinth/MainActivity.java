@@ -6,10 +6,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 
+import java.io.ByteArrayOutputStream;
+import java.io.DataInput;
+import java.io.DataInputStream;
+import java.io.DataOutput;
+import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 
 // TODO used to extend AppCompatActivity -- remove this comment when it works
 public class MainActivity extends Activity {
@@ -29,7 +36,8 @@ public class MainActivity extends Activity {
             InputStream saveStream = null;
             try {
                 saveStream = new FileInputStream(saveFile);
-                getMainView().startGame(saveStream);
+                DataInput dataInput = new DataInputStream(saveStream);
+                getMainView().startGame(dataInput);
             } catch (IOException e) {
                 getMainView().startGame(null);
             } finally {
@@ -48,7 +56,28 @@ public class MainActivity extends Activity {
 
     @Override
     protected void onPause() {
-        // TODO save game
+        /*
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        DataOutputStream dataOutput = new DataOutputStream(byteArrayOutputStream);
+        getMainView().saveGame(dataOutput);
+
+        OutputStream saveStream = null;
+        try {
+            saveStream = new FileOutputStream(getSaveFile());
+            saveStream.write(byteArrayOutputStream.toByteArray());
+        } catch (IOException e) {
+            // we'll have to ignore this, even though the save file is probably corrupted
+        } finally {
+            if (saveStream != null) {
+                try {
+                    saveStream.close();
+                } catch (IOException e) {
+                    // ignore
+                }
+            }
+        }
+        */
+
         super.onPause();
     }
 

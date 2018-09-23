@@ -4,6 +4,8 @@
  */
 package name.martingeisse.labyrinth.game;
 
+import java.io.DataInput;
+import java.io.DataOutput;
 import java.io.InputStream;
 import java.io.OutputStream;
 
@@ -18,7 +20,7 @@ public class Game {
 
     private Room room;
 
-    public Game(InputStream saveStream) {
+    public Game(DataInput saveStream) {
         Block.checkTexturesLoaded();
         SoundEffects.checkSoundsLoaded();
         if (saveStream == null) {
@@ -28,7 +30,7 @@ public class Game {
         }
     }
 
-    public void save(OutputStream saveStream) {
+    public void save(DataOutput saveStream) {
         room.save(saveStream);
     }
 

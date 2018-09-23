@@ -13,6 +13,8 @@ import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
 
+import java.io.DataInput;
+import java.io.DataOutput;
 import java.io.InputStream;
 import java.io.OutputStream;
 
@@ -121,7 +123,7 @@ public class MainView extends View {
         return new AndroidSoundEffect(mainSoundPool, soundId);
     }
 
-    public void startGame(InputStream saveStream) {
+    public void startGame(DataInput saveStream) {
 
         // initialize the game
         if (SoundEffects.backgroundStreamId >= 0) {
@@ -147,7 +149,7 @@ public class MainView extends View {
 
     }
 
-    public void saveGame(OutputStream saveStream) {
+    public void saveGame(DataOutput saveStream) {
         game.save(saveStream);
     }
 
