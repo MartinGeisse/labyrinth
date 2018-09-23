@@ -7,3 +7,10 @@ https://opengameart.org/content/lots-of-free-2d-tiles-and-sprites-by-hyptosis
 	hyptosis_tile-art-batch-1.png
 https://opengameart.org/content/tiny-16-basic
     basictiles.png
+
+https://opengameart.org/content/rpg-sound-pack
+    (sounds)
+https://opengameart.org/content/50-rpg-sound-effects
+    (sounds)
+https://opengameart.org/content/4-atmospheric-ghostly-loops
+    (sounds)

@@ -5,6 +5,7 @@
 package name.martingeisse.labyrinth.game;
 
 import name.martingeisse.labyrinth.system.Renderer;
+import name.martingeisse.labyrinth.system.SoundEffects;
 
 /**
  *
@@ -15,6 +16,7 @@ public class Game {
 
 	public Game() {
 		Block.checkTexturesLoaded();
+		SoundEffects.checkSoundsLoaded();
 	}
 
 	public void step() {

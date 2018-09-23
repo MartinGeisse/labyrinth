@@ -8,6 +8,7 @@ import name.martingeisse.labyrinth.game.Block;
 import name.martingeisse.labyrinth.game.Direction;
 import name.martingeisse.labyrinth.game.Room;
 import name.martingeisse.labyrinth.game.Trigger;
+import name.martingeisse.labyrinth.system.SoundEffects;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -135,6 +136,7 @@ public class RoomBuilder {
 		setDoor(x, y, block, startDirection, new Trigger.Callback() {
 			@Override
 			public void onTouch(Room oldRoom) {
+				SoundEffects.door.play();
 				oldRoom.getGame().setRoom(roomFactory.buildRoom(enteringDoor));
 			}
 		});
