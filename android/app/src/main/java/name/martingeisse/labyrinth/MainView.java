@@ -10,12 +10,16 @@ import android.media.AudioManager;
 import android.media.SoundPool;
 import android.os.Build;
 import android.os.Handler;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
 import java.io.DataInput;
 import java.io.DataOutput;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 import java.io.OutputStream;
 
 import name.martingeisse.labyrinth.game.Block;
@@ -123,7 +127,7 @@ public class MainView extends View {
         return new AndroidSoundEffect(mainSoundPool, soundId);
     }
 
-    public void startGame(DataInput saveStream) {
+    public void startGame(ObjectInput saveStream) {
 
         // initialize the game
         if (SoundEffects.backgroundStreamId >= 0) {
@@ -131,7 +135,16 @@ public class MainView extends View {
             SoundEffects.backgroundStreamId = -1;
         }
         SoundEffects.backgroundStreamId = SoundEffects.background1.loop();
-        game = new Game(saveStream);
+        if (saveStream == null) {
+            game = new Game();
+        } else {
+            try {
+                game = (Game)saveStream.readObject();
+            } catch (Exception e) {
+                Log.e("MainView.startGame", "could not load savegame", e);
+                game = new Game();
+            }
+        }
 
         // start the game loop
         if (handler != null && frameRunnable != null) {
@@ -149,8 +162,8 @@ public class MainView extends View {
 
     }
 
-    public void saveGame(DataOutput saveStream) {
-        game.save(saveStream);
+    public void saveGame(ObjectOutput saveStream) throws IOException {
+        saveStream.writeObject(game);
     }
 
     @Override

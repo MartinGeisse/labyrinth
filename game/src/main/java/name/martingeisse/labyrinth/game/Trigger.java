@@ -4,10 +4,14 @@
  */
 package name.martingeisse.labyrinth.game;
 
+import java.io.DataOutput;
+import java.io.IOException;
+import java.io.Serializable;
+
 /**
  *
  */
-public abstract class Trigger {
+public abstract class Trigger implements Serializable {
 
     private int x;
     private int y;

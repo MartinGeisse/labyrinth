@@ -7,15 +7,13 @@ import android.view.ViewGroup;
 import android.view.Window;
 
 import java.io.ByteArrayOutputStream;
-import java.io.DataInput;
-import java.io.DataInputStream;
-import java.io.DataOutput;
-import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 
 // TODO used to extend AppCompatActivity -- remove this comment when it works
@@ -36,8 +34,8 @@ public class MainActivity extends Activity {
             InputStream saveStream = null;
             try {
                 saveStream = new FileInputStream(saveFile);
-                DataInput dataInput = new DataInputStream(saveStream);
-                getMainView().startGame(dataInput);
+                ObjectInputStream objectInput = new ObjectInputStream(saveStream);
+                getMainView().startGame(objectInput);
             } catch (IOException e) {
                 getMainView().startGame(null);
             } finally {
@@ -56,13 +54,11 @@ public class MainActivity extends Activity {
 
     @Override
     protected void onPause() {
-        /*
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        DataOutputStream dataOutput = new DataOutputStream(byteArrayOutputStream);
-        getMainView().saveGame(dataOutput);
-
         OutputStream saveStream = null;
         try {
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            ObjectOutputStream objectOutput = new ObjectOutputStream(byteArrayOutputStream);
+            getMainView().saveGame(objectOutput);
             saveStream = new FileOutputStream(getSaveFile());
             saveStream.write(byteArrayOutputStream.toByteArray());
         } catch (IOException e) {
@@ -76,8 +72,6 @@ public class MainActivity extends Activity {
                 }
             }
         }
-        */
-
         super.onPause();
     }
 

@@ -4,10 +4,7 @@
  */
 package name.martingeisse.labyrinth.game;
 
-import java.io.DataInput;
-import java.io.DataOutput;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.Serializable;
 
 import name.martingeisse.labyrinth.game.rooms.RoomFactories;
 import name.martingeisse.labyrinth.system.Renderer;
@@ -16,22 +13,14 @@ import name.martingeisse.labyrinth.system.SoundEffects;
 /**
  *
  */
-public class Game {
+public class Game implements Serializable {
 
     private Room room;
 
-    public Game(DataInput saveStream) {
+    public Game() {
         Block.checkTexturesLoaded();
         SoundEffects.checkSoundsLoaded();
-        if (saveStream == null) {
-            setRoom(RoomFactories.startRoom.buildRoom(RoomFactories.startRoomInitialDoor));
-        } else {
-            setRoom(new Room(saveStream));
-        }
-    }
-
-    public void save(DataOutput saveStream) {
-        room.save(saveStream);
+        setRoom(RoomFactories.startRoom.buildRoom(RoomFactories.startRoomInitialDoor));
     }
 
     public void step() {

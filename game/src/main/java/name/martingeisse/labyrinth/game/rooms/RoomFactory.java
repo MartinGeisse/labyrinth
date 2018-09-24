@@ -4,12 +4,14 @@
  */
 package name.martingeisse.labyrinth.game.rooms;
 
+import java.io.Serializable;
+
 import name.martingeisse.labyrinth.game.*;
 
 /**
  *
  */
-public interface RoomFactory {
+public interface RoomFactory extends Serializable {
 
 	Room buildRoom(int enteringDoor);
 
