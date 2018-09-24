@@ -7,62 +7,39 @@ package name.martingeisse.labyrinth.game;
 /**
  *
  */
-public final class Trigger {
+public abstract class Trigger {
 
-	private int x;
-	private int y;
-	private Callback callback;
+    private int x;
+    private int y;
 
-	public Trigger() {
-	}
+    public Trigger(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
 
-	public Trigger(int x, int y) {
-		this.x = x;
-		this.y = y;
-	}
+    public int getX() {
+        return x;
+    }
 
-	public Trigger(Callback callback) {
-		this.callback = callback;
-	}
+    public void setX(int x) {
+        this.x = x;
+    }
 
-	public Trigger(int x, int y, Callback callback) {
-		this.x = x;
-		this.y = y;
-		this.callback = callback;
-	}
+    public int getY() {
+        return y;
+    }
 
-	public int getX() {
-		return x;
-	}
+    public void setY(int y) {
+        this.y = y;
+    }
 
-	public void setX(int x) {
-		this.x = x;
-	}
+    public void check(Room room) {
+        PlayerSprite playerSprite = room.getPlayerSprite();
+        if (playerSprite.getPlayerX() == x && playerSprite.getPlayerY() == y) {
+            onTouch(room);
+        }
+    }
 
-	public int getY() {
-		return y;
-	}
+    protected abstract void onTouch(Room room);
 
-	public void setY(int y) {
-		this.y = y;
-	}
-
-	public Callback getCallback() {
-		return callback;
-	}
-
-	public void setCallback(Callback callback) {
-		this.callback = callback;
-	}
-
-	public void check(Room room) {
-		PlayerSprite playerSprite = room.getPlayerSprite();
-		if (playerSprite.getPlayerX() == x && playerSprite.getPlayerY() == y && callback != null) {
-			callback.onTouch(room);
-		}
-	}
-
-	public interface Callback {
-		void onTouch(Room room);
-	}
 }

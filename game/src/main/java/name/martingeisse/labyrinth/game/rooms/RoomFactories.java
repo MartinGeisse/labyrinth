@@ -24,7 +24,7 @@ public final class RoomFactories {
 			builder.roomOutline(Block.WALL1);
 			builder.rectangleFilled(6, 3, 3, 3, Block.WALL1);
 			builder.setDoor(7, 5, Block.DOOR1, Direction.SOUTH, initial2, 0);
-			builder.setDoor(3, 3, Block.TILE1, Direction.EAST, (Trigger.Callback) null);
+			builder.setDoor(3, 3, Block.TILE1, Direction.EAST, null, 0);
 			builder.selectDoor(enteringDoor);
 			return builder.getRoom();
 		}
@@ -52,8 +52,8 @@ public final class RoomFactories {
 			builder.fill(Block.TILE1);
 			builder.roomOutline(Block.WALL1);
 			builder.setDoor(15, 0, Block.DOOR1, Direction.SOUTH, initial2, 1);
-			builder.setDoor(1, 1, Block.DOOR1, Direction.EAST);
-			builder.setDoor(28, 1, Block.DOOR1, Direction.WEST);
+			builder.setDoor(1, 1, Block.DOOR1, Direction.EAST, null, 0);
+			builder.setDoor(28, 1, Block.DOOR1, Direction.WEST, null, 0);
 			builder.selectDoor(enteringDoor);
 			return builder.getRoom();
 		}
