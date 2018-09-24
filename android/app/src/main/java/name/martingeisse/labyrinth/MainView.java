@@ -14,13 +14,9 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
-import java.io.DataInput;
-import java.io.DataOutput;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
-import java.io.OutputStream;
 
 import name.martingeisse.labyrinth.game.Block;
 import name.martingeisse.labyrinth.game.Direction;
@@ -51,7 +47,7 @@ public class MainView extends View {
         touchInputSource = new AndroidTouchInputSource();
         InputStrategy.Holder.INSTANCE = new TouchInputStrategy(touchInputSource, 50.0f, true);
 
-        // initialize resources
+        // initialize texture resources
         Block.NOTHING.setTexture(loadTexture(R.drawable.nothing));
         Block.TILE1.setTexture(loadTexture(R.drawable.tile1));
         Block.WALL1.setTexture(loadTexture(R.drawable.wall1));
@@ -72,6 +68,11 @@ public class MainView extends View {
             playerTextures[Direction.EAST.ordinal()][2] = loadTexture(R.drawable.player_east_2);
             PlayerSprite.setTextures(playerTextures);
         }
+
+        // initialize background sound resources
+        SoundEffects.background1 = loadBackgroundSound(R.raw.atmoseerie02);
+
+        // initialize sound effect resources
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             mainSoundPool = createNewSoundPool();
         } else {
@@ -86,8 +87,7 @@ public class MainView extends View {
                 }
             }
         });
-        SoundEffects.background1 = loadSound(R.raw.atmoseerie02);
-        SoundEffects.door = loadSound(R.raw.door);
+        SoundEffects.door = loadSoundEffect(R.raw.door);
 
     }
 
@@ -122,24 +122,24 @@ public class MainView extends View {
         return new SoundPool(5, AudioManager.STREAM_MUSIC, 0);
     }
 
-    private AndroidSoundEffect loadSound(int resourceId) {
+    private AndroidSoundEffect loadSoundEffect(int resourceId) {
         int soundId = mainSoundPool.load(getContext(), resourceId, 0);
         return new AndroidSoundEffect(mainSoundPool, soundId);
+    }
+
+    private AndroidBackgroundSound loadBackgroundSound(int resourceId) {
+        return new AndroidBackgroundSound(getResources(), resourceId);
     }
 
     public void startGame(ObjectInput saveStream) {
 
         // initialize the game
-        if (SoundEffects.backgroundStreamId >= 0) {
-            mainSoundPool.stop(SoundEffects.backgroundStreamId);
-            SoundEffects.backgroundStreamId = -1;
-        }
-        SoundEffects.backgroundStreamId = SoundEffects.background1.loop();
+        SoundEffects.background1.play();
         if (saveStream == null) {
             game = new Game();
         } else {
             try {
-                game = (Game)saveStream.readObject();
+                game = (Game) saveStream.readObject();
             } catch (Exception e) {
                 Log.e("MainView.startGame", "could not load savegame", e);
                 game = new Game();

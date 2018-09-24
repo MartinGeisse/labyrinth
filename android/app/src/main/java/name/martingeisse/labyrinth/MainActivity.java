@@ -75,6 +75,12 @@ public class MainActivity extends Activity {
         super.onPause();
     }
 
+    @Override
+    protected void onStop() {
+        BackgroundSoundPlayer.destroy();
+        super.onStop();
+    }
+
     private File getSaveFile() {
         return new File(getFilesDir(), "savegame");
     }

@@ -2,8 +2,7 @@ package name.martingeisse.labyrinth.system;
 
 public final class SoundEffects {
 
-    public static SoundEffect background1;
-    public static int backgroundStreamId = -1;
+    public static BackgroundSound background1;
 
     public static SoundEffect door;
 
@@ -12,9 +11,9 @@ public final class SoundEffects {
         check(door, "door");
     }
 
-    private static void check(SoundEffect effect, String name) {
-        if (effect == null) {
-            throw new IllegalStateException("missing sound effect: " + name);
+    private static void check(Object sound, String name) {
+        if (sound == null) {
+            throw new IllegalStateException("missing sound: " + name);
         }
     }
 
