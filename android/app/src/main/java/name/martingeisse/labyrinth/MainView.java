@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
+import name.martingeisse.labyrinth.game.BackgroundSoundSelector;
 import name.martingeisse.labyrinth.game.Block;
 import name.martingeisse.labyrinth.game.Direction;
 import name.martingeisse.labyrinth.game.Game;
@@ -36,6 +37,7 @@ public class MainView extends View {
     private int soundsLoaded = 0;
     private Game game;
     private Runnable frameRunnable;
+    private boolean stopped;
 
     public MainView(Context context) {
         super(context);
@@ -70,7 +72,8 @@ public class MainView extends View {
         }
 
         // initialize background sound resources
-        SoundEffects.background1 = loadBackgroundSound(R.raw.atmoseerie02);
+        BackgroundSoundSelector.BACKGROUND1.setSound(loadBackgroundSound(R.raw.atmoseerie02_ogg));
+        BackgroundSoundSelector.BACKGROUND2.setSound(loadBackgroundSound(R.raw.atmoseerie04_ogg));
 
         // initialize sound effect resources
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -134,7 +137,6 @@ public class MainView extends View {
     public void startGame(ObjectInput saveStream) {
 
         // initialize the game
-        SoundEffects.background1.play();
         if (saveStream == null) {
             game = new Game();
         } else {
@@ -144,6 +146,7 @@ public class MainView extends View {
                 Log.e("MainView.startGame", "could not load savegame", e);
                 game = new Game();
             }
+            game.getRoom().getBackgroundSoundSelector().getSound().play();
         }
 
         // start the game loop
@@ -153,9 +156,11 @@ public class MainView extends View {
         frameRunnable = new Runnable() {
             @Override
             public void run() {
-                game.step();
-                invalidate();
-                handler.postDelayed(this, 30);
+                if (!stopped) {
+                    game.step();
+                    invalidate();
+                    handler.postDelayed(this, 30);
+                }
             }
         };
         handler.post(frameRunnable);
@@ -181,4 +186,8 @@ public class MainView extends View {
         ((AndroidRenderer) Renderer.Holder.INSTANCE).setCanvas(null);
     }
 
+    public void stop() {
+        stopped = true;
+        TODO where to call?
+    }
 }

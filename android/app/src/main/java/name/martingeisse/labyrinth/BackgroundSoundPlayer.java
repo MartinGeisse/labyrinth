@@ -10,22 +10,20 @@ import java.io.IOException;
 public class BackgroundSoundPlayer {
 
     private static MediaPlayer mediaPlayer;
+    private static int previousResourceId;
 
     public static void initialize() {
-        destroy();
-        mediaPlayer = new MediaPlayer();
-    }
-
-    public static void destroy() {
-        if (mediaPlayer != null) {
-            mediaPlayer.release();
-            mediaPlayer = null;
+        if (mediaPlayer == null) {
+            mediaPlayer = new MediaPlayer();
+            previousResourceId = -1;
         }
     }
 
     public static void play(Resources resources, int resourceId) {
-        if (mediaPlayer == null) {
-            initialize();
+        initialize();
+        if (previousResourceId == resourceId) {
+            mediaPlayer.start();
+            return;
         }
         mediaPlayer.reset();
         if (!setSource(resources, resourceId)) {
@@ -35,6 +33,7 @@ public class BackgroundSoundPlayer {
             mediaPlayer.prepare();
             mediaPlayer.start();
             mediaPlayer.setLooping(true);
+            previousResourceId = resourceId;
         } catch (IOException e) {
             Log.e("BackgroundSoundPlayer", "could not prepare sound");
         }
@@ -60,6 +59,10 @@ public class BackgroundSoundPlayer {
                 }
             }
         }
+    }
+
+    public static void pause() {
+        mediaPlayer.pause();
     }
 
 }

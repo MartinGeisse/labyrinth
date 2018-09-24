@@ -13,8 +13,14 @@ public enum Block {
 
 	NOTHING(true),
 	TILE1(false),
+	TILE2(false),
+	TILE3(false),
 	WALL1(true),
-	DOOR1(false);
+	WALL2(true),
+	WALL3(true),
+	WATER(true),
+	DOOR1(false),
+	LOCK_GOLD(true);
 
 	// avoid recreating this array over and over
 	public static final Block[] TABLE = values();

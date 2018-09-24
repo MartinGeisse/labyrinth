@@ -11,7 +11,7 @@ import name.martingeisse.labyrinth.system.BackgroundSound;
  */
 public enum BackgroundSoundSelector {
 
-	BACKGROUND1, BACKGROUND2;
+	BACKGROUND1, BACKGROUND2, BACKGROUND3;
 
 	private BackgroundSound sound;
 

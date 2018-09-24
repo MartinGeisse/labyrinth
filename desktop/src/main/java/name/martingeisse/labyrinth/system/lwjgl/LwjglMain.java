@@ -56,6 +56,7 @@ public class LwjglMain {
 		SoundEffects.door = new LwjglSoundEffect(Resources.getSound("door.ogg"));
 		BackgroundSoundSelector.BACKGROUND1.setSound(new LwjglBackgroundSound(Resources.getSound("atmoseerie02_ogg.ogg")));
 		BackgroundSoundSelector.BACKGROUND2.setSound(new LwjglBackgroundSound(Resources.getSound("atmoseerie04_ogg.ogg")));
+		BackgroundSoundSelector.BACKGROUND3.setSound(new LwjglBackgroundSound(Resources.getSound("rain-gutter-loop_0.ogg")));
 
 		// initialize game
 		Game game = new Game();

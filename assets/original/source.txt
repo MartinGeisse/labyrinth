@@ -14,3 +14,13 @@ https://opengameart.org/content/50-rpg-sound-effects
     (sounds)
 https://opengameart.org/content/4-atmospheric-ghostly-loops
     (sounds)
+https://opengameart.org/content/steam-boiler-sound-loop
+    (sounds)
+https://opengameart.org/content/simple-broad-purpose-tileset
+    simples_pimples.png
+https://opengameart.org/content/old-frogatto-tile-art
+    dirt-tiles.png
+https://opengameart.org/content/rain-gutter-loop
+    (sounds)
+https://opengameart.org/content/16x16-overworld-tiles
+    set.gif
