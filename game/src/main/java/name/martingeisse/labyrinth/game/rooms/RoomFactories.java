@@ -26,6 +26,7 @@ public final class RoomFactories {
 			builder.setDoor(7, 5, Block.DOOR1, Direction.SOUTH, initial2, 0);
 			builder.setDoor(3, 3, Block.TILE1, Direction.EAST, null, 0);
 			builder.selectDoor(enteringDoor);
+			builder.setBackgroundSound(BackgroundSoundSelector.BACKGROUND1);
 			return builder.getRoom();
 		}
 	};
@@ -41,6 +42,7 @@ public final class RoomFactories {
 			builder.setDoor(10, 5, Block.DOOR1, Direction.SOUTH, startRoom, 0);
 			builder.setDoor(4, 5, Block.DOOR1, Direction.SOUTH, initial3, 0);
 			builder.selectDoor(enteringDoor);
+			builder.setBackgroundSound(BackgroundSoundSelector.BACKGROUND1);
 			return builder.getRoom();
 		}
 	};
@@ -55,6 +57,7 @@ public final class RoomFactories {
 			builder.setDoor(1, 1, Block.DOOR1, Direction.EAST, null, 0);
 			builder.setDoor(28, 1, Block.DOOR1, Direction.WEST, null, 0);
 			builder.selectDoor(enteringDoor);
+			builder.setBackgroundSound(BackgroundSoundSelector.BACKGROUND2);
 			return builder.getRoom();
 		}
 	};

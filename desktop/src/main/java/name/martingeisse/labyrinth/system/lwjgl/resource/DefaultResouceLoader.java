@@ -75,7 +75,7 @@ public final class DefaultResouceLoader implements ResourceLoader {
 
 		}
 
-		try (InputStream inputStream = org.newdawn.slick.util.ResourceLoader.getResourceAsStream(resolveFile("sounds", filename).getPath())) {
+		try (InputStream inputStream = org.newdawn.slick.util.ResourceLoader.getResourceAsStream(resolveFile("raw", filename).getPath())) {
 			return AudioLoader.getAudio(format, inputStream);
 		}
 	}

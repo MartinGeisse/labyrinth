@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import name.martingeisse.labyrinth.game.BackgroundSoundSelector;
 import name.martingeisse.labyrinth.game.Block;
 import name.martingeisse.labyrinth.game.Direction;
 import name.martingeisse.labyrinth.game.Room;
@@ -137,6 +138,10 @@ public class RoomBuilder {
         room.getPlayerSprite().setPlayerX(doorLocations.get(doorIndex << 1));
         room.getPlayerSprite().setPlayerY(doorLocations.get((doorIndex << 1) + 1));
         room.getPlayerSprite().setDirection(doorDirections.get(doorIndex));
+    }
+
+    public void setBackgroundSound(BackgroundSoundSelector selector) {
+        room.setBackgroundSoundSelector(selector);
     }
 
 }

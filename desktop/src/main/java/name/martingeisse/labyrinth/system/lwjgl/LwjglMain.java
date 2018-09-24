@@ -6,15 +6,9 @@
 
 package name.martingeisse.labyrinth.system.lwjgl;
 
-import name.martingeisse.labyrinth.game.Block;
-import name.martingeisse.labyrinth.game.Direction;
-import name.martingeisse.labyrinth.game.Game;
-import name.martingeisse.labyrinth.game.PlayerSprite;
+import name.martingeisse.labyrinth.game.*;
 import name.martingeisse.labyrinth.game.rooms.RoomFactories;
-import name.martingeisse.labyrinth.system.FrameTimer;
-import name.martingeisse.labyrinth.system.InputStrategy;
-import name.martingeisse.labyrinth.system.Renderer;
-import name.martingeisse.labyrinth.system.Texture;
+import name.martingeisse.labyrinth.system.*;
 import name.martingeisse.labyrinth.system.lwjgl.resource.DefaultResouceLoader;
 import name.martingeisse.labyrinth.system.lwjgl.resource.DefaultResourceManager;
 import name.martingeisse.labyrinth.system.lwjgl.resource.Resources;
@@ -41,7 +35,7 @@ public class LwjglMain {
 		Renderer.Holder.INSTANCE = new LwjglRenderer();
 		InputStrategy.Holder.INSTANCE = new LwjglKeyboardInputStrategy();
 
-		// initialize resources
+		// initialize texture resources
 		Resources.setResourceManager(new DefaultResourceManager(new DefaultResouceLoader()));
 		for (Block block : Block.values()) {
 			block.setTexture(Resources.getTexture(block.name().toLowerCase() + ".png"));
@@ -57,6 +51,11 @@ public class LwjglMain {
 			}
 			PlayerSprite.setTextures(playerTextures);
 		}
+
+		// initialize sound resources
+		SoundEffects.door = new LwjglSoundEffect(Resources.getSound("door.ogg"));
+		BackgroundSoundSelector.BACKGROUND1.setSound(new LwjglBackgroundSound(Resources.getSound("atmoseerie02_ogg.ogg")));
+		BackgroundSoundSelector.BACKGROUND2.setSound(new LwjglBackgroundSound(Resources.getSound("atmoseerie04_ogg.ogg")));
 
 		// initialize game
 		Game game = new Game();
@@ -94,6 +93,5 @@ public class LwjglMain {
 		System.exit(0);
 
 	}
-
 
 }

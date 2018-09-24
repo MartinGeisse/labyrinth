@@ -20,6 +20,7 @@ public class Game implements Serializable {
     public Game() {
         Block.checkTexturesLoaded();
         SoundEffects.checkSoundsLoaded();
+        BackgroundSoundSelector.checkSoundsLoaded();
         setRoom(RoomFactories.startRoom.buildRoom(RoomFactories.startRoomInitialDoor));
     }
 

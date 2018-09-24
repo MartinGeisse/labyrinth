@@ -22,6 +22,7 @@ public class Room implements Serializable {
     private final PlayerSprite playerSprite;
     private int screenX, screenY;
     private final List<Trigger> triggers = new ArrayList<>();
+    private BackgroundSoundSelector backgroundSoundSelector;
 
     public Room(int width, int height) {
         this.width = width;
@@ -35,6 +36,9 @@ public class Room implements Serializable {
             throw new IllegalStateException("room already bound to game");
         }
         this.game = game;
+        if (backgroundSoundSelector != null) {
+            backgroundSoundSelector.getSound().play();
+        }
     }
 
     public Game getGame() {
@@ -149,6 +153,17 @@ public class Room implements Serializable {
     void checkTriggers() {
         for (Trigger trigger : triggers) {
             trigger.check(this);
+        }
+    }
+
+    public BackgroundSoundSelector getBackgroundSoundSelector() {
+        return backgroundSoundSelector;
+    }
+
+    public void setBackgroundSoundSelector(BackgroundSoundSelector backgroundSoundSelector) {
+        this.backgroundSoundSelector = backgroundSoundSelector;
+        if (game != null && game.getRoom() == this) {
+            backgroundSoundSelector.getSound().play();
         }
     }
 
