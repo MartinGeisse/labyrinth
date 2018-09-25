@@ -34,8 +34,14 @@ public class ResourceManager {
         // initialize texture resources
         Block.NOTHING.setTexture(loadTexture(R.drawable.nothing));
         Block.TILE1.setTexture(loadTexture(R.drawable.tile1));
+        Block.TILE2.setTexture(loadTexture(R.drawable.tile2));
+        Block.TILE3.setTexture(loadTexture(R.drawable.tile3));
         Block.WALL1.setTexture(loadTexture(R.drawable.wall1));
+        Block.WALL2.setTexture(loadTexture(R.drawable.wall2));
+        Block.WALL3.setTexture(loadTexture(R.drawable.wall3));
+        Block.WATER.setTexture(loadTexture(R.drawable.water));
         Block.DOOR1.setTexture(loadTexture(R.drawable.door1));
+        Block.LOCK_GOLD.setTexture(loadTexture(R.drawable.lock_gold));
         {
             Texture[][] playerTextures = new Texture[4][3];
             playerTextures[Direction.NORTH.ordinal()][0] = loadTexture(R.drawable.player_north_0);
@@ -55,9 +61,9 @@ public class ResourceManager {
 
         // initialize background sound resources
         BackgroundSoundPlayer.initialize();
-        BackgroundSoundSelector.BACKGROUND1.setSound(loadBackgroundSound(R.raw.atmoseerie02_ogg));
-        BackgroundSoundSelector.BACKGROUND2.setSound(loadBackgroundSound(R.raw.atmoseerie04_ogg));
-        // TODO should crash due to background 3 missing
+        BackgroundSoundSelector.BACKGROUND1.setSound(loadBackgroundSound(R.raw.background1));
+        BackgroundSoundSelector.BACKGROUND2.setSound(loadBackgroundSound(R.raw.background2));
+        BackgroundSoundSelector.BACKGROUND3.setSound(loadBackgroundSound(R.raw.background3));
 
         // initialize sound effect resources
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {

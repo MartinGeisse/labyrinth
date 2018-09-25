@@ -51,7 +51,7 @@ public enum Block {
 	public static void checkTexturesLoaded() {
 		for (Block block : values()) {
 			if (block.texture == null) {
-				throw new IllegalStateException("missing block texture");
+				throw new IllegalStateException("missing block texture: " + block);
 			}
 		}
 	}

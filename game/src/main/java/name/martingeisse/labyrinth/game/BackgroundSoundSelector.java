@@ -26,7 +26,7 @@ public enum BackgroundSoundSelector {
 	public static void checkSoundsLoaded() {
 		for (BackgroundSoundSelector selector : values()) {
 			if (selector.sound == null) {
-				throw new IllegalStateException("missing background sound");
+				throw new IllegalStateException("missing background sound: " + selector);
 			}
 		}
 	}
