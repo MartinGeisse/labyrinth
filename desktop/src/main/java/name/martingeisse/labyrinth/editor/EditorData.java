@@ -124,4 +124,71 @@ public class EditorData {
 		return blockPalette;
 	}
 
+	public void save() {
+
+		System.out.println();
+		System.out.println("------------------------------------------------------------");
+		System.out.println();
+
+		int firstX = 0;
+		while (firstX < EDIT_WIDTH && columnEmpty(firstX)) {
+			firstX++;
+		}
+		if (firstX == EDIT_WIDTH) {
+			System.out.println("EMPTY!");
+			return;
+		}
+		int lastX = EDIT_WIDTH - 1;
+		while (columnEmpty(lastX)) {
+			lastX--;
+		}
+		int firstY = 0;
+		while (rowEmpty(firstY)) {
+			firstY++;
+		}
+		int lastY = EDIT_HEIGHT - 1;
+		while (rowEmpty(lastY)) {
+			lastY--;
+		}
+		int width = (lastX - firstX + 1);
+		int height = (lastY - firstY + 1);
+
+		System.out.println("DUMMY!!!");
+		System.out.println();
+		System.out.println("\tpublic static final RoomFactory xyzxyzxyz = new RoomFactory() {");
+		System.out.println("\t\t@Override");
+		System.out.println("\t\tpublic Room buildRoom(int enteringDoor) {");
+		System.out.println("\t\t\tRoomBuilder builder = new RoomBuilder(" + width + ", " + height + ");");
+		System.out.println("\t\t\tbuilder.fill(Block.WATER);");
+		System.out.println("\t\t\tbuilder.roomOutline(Block.WALL3);");
+		System.out.println("\t\t\tbuilder.rectangleOutline(3, 3, 7, 7, Block.TILE3);");
+		System.out.println("\t\t\tbuilder.rectangleOutline(4, 4, 5, 5, Block.TILE3);");
+		System.out.println("\t\t\tbuilder.rectangleFilled(5, 5, 3, 3, Block.WALL3);");
+		System.out.println("\t\t\tbuilder.setDoor(6, 7, Block.DOOR1, Direction.SOUTH, initial3, 2);");
+		System.out.println("\t\t\tbuilder.selectDoor(enteringDoor);");
+		System.out.println("\t\t\tbuilder.setBackgroundSound(BackgroundSoundSelector.BACKGROUND3);");
+		System.out.println("\t\t\treturn builder.getRoom();");
+		System.out.println("\t\t}");
+		System.out.println("\t};");
+	}
+
+	private boolean rowEmpty(int y) {
+		for (int x = 0; x < EDIT_WIDTH; x++) {
+			if (getBlockNumber(x, y) != 0) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	private boolean columnEmpty(int x) {
+		for (int y = 0; y < EDIT_HEIGHT; y++) {
+			if (getBlockNumber(x, y) != 0) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+
 }

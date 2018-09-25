@@ -28,6 +28,7 @@ public class EditorBackbone {
 	private final EditorData data;
 	private EditorPane[] panes;
 	private EditorPane currentPane;
+	private boolean savePressed;
 
 	public EditorBackbone() {
 		data = new EditorData();
@@ -50,6 +51,14 @@ public class EditorBackbone {
 			if (Keyboard.isKeyDown(PANE_SELECTOR_KEYS[i])) {
 				currentPane = panes[i];
 			}
+		}
+		if (Keyboard.isKeyDown(Keyboard.KEY_S)) {
+			if (!savePressed) {
+				savePressed = true;
+				data.save();
+			}
+		} else {
+			savePressed = false;
 		}
 		currentPane.frame();
 	}

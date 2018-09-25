@@ -47,11 +47,11 @@ public class BlockSelectPane implements EditorPane {
 	}
 
 	private static Block getMouseBlock() {
-		int index = getMouseBlockIndex();
+		int index = getMouseBlockNumber();
 		return index < 0 ? null : Block.TABLE[index];
 	}
 
-	private static int getMouseBlockIndex() {
+	private static int getMouseBlockNumber() {
 		int x = Mouse.getX() / 32;
 		int y = (Display.getHeight() - Mouse.getY()) / 32;
 		if (x < 0 || x >= 20 || y < 0 || y >= 15) {

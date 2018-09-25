@@ -43,7 +43,7 @@ public class BlockEditPane implements EditorPane {
 		if (paletteIndex != -1) {
 			data.setDrawingBlock(data.getBlockPalette()[paletteIndex]);
 		}
-		if (Mouse.isButtonDown(0)) {
+		if (Mouse.isButtonDown(0) && data.getDrawingBlock() != null) {
 			int x = (Mouse.getX() + data.getScreenX()) / 32;
 			int y = (Display.getHeight() - Mouse.getY() + data.getScreenY()) / 32;
 			if (x >= 0 && x < EditorData.EDIT_WIDTH && y >= 0 && y < EditorData.EDIT_HEIGHT) {
