@@ -4,14 +4,15 @@
  * This file is distributed under the terms of the MIT license.
  */
 
-package name.martingeisse.labyrinth.system.lwjgl;
+package name.martingeisse.labyrinth.editor;
 
-import name.martingeisse.labyrinth.game.*;
-import name.martingeisse.labyrinth.game.rooms.RoomFactories;
-import name.martingeisse.labyrinth.system.*;
-import name.martingeisse.labyrinth.system.lwjgl.resource.DefaultResouceLoader;
-import name.martingeisse.labyrinth.system.lwjgl.resource.DefaultResourceManager;
-import name.martingeisse.labyrinth.system.lwjgl.resource.Resources;
+import name.martingeisse.labyrinth.system.FrameTimer;
+import name.martingeisse.labyrinth.system.InputStrategy;
+import name.martingeisse.labyrinth.system.Renderer;
+import name.martingeisse.labyrinth.system.lwjgl.Launcher;
+import name.martingeisse.labyrinth.system.lwjgl.LgjglResourceInitializer;
+import name.martingeisse.labyrinth.system.lwjgl.LwjglKeyboardInputStrategy;
+import name.martingeisse.labyrinth.system.lwjgl.LwjglRenderer;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
@@ -19,7 +20,7 @@ import org.lwjgl.opengl.Display;
 /**
  * The main class.
  */
-public class LwjglMain {
+public class EditorMain {
 
 	/**
 	 * The main method.
@@ -38,13 +39,12 @@ public class LwjglMain {
 		// initialize resources
 		LgjglResourceInitializer.initializeResources();
 
-		// initialize game
-		Game game = new Game();
-		game.setRoom(RoomFactories.startRoom.buildRoom(RoomFactories.startRoomInitialDoor));
+		// initialize editor
+		EditorBackbone backbone = new EditorBackbone();
 
 		// main loop
 		FrameTimer frameTimer = new FrameTimer(30);
-		while (!Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)) {
+		while (!Keyboard.isKeyDown(Keyboard.KEY_F12)) {
 
 			// synchronize with OS
 			Display.processMessages();
@@ -52,10 +52,7 @@ public class LwjglMain {
 			Keyboard.poll();
 
 			// handle game logic
-			game.step();
-
-			// draw next frame
-			game.draw();
+			backbone.frame();
 
 			// wait for frame timer
 			while (!frameTimer.test()) {
