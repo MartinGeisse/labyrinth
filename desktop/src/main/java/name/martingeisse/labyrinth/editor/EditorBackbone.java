@@ -39,6 +39,7 @@ public class EditorBackbone {
 
 		panes = new EditorPane[]{
 			new BlockEditPane(data),
+			new BlockSelectPane(data),
 			new GamePane(),
 		};
 		currentPane = panes[0];
