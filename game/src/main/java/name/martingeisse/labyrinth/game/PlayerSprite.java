@@ -107,6 +107,10 @@ public class PlayerSprite implements Serializable {
         Renderer.Holder.INSTANCE.drawPlayerSprite(anchorX, anchorY, texture);
     }
 
+    public static Texture[][] getTextures() {
+        return textures;
+    }
+
     public static void setTextures(Texture[][] textures) {
         PlayerSprite.textures = textures;
     }

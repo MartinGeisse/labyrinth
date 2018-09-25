@@ -10,17 +10,29 @@ import java.io.IOException;
 public class BackgroundSoundPlayer {
 
     private static MediaPlayer mediaPlayer;
-    private static int previousResourceId;
+    private static int previousResourceId = -1;
 
     public static void initialize() {
-        if (mediaPlayer == null) {
-            mediaPlayer = new MediaPlayer();
-            previousResourceId = -1;
-        }
+        destroy();
+        mediaPlayer = new MediaPlayer();
     }
 
+    public static void destroy() {
+        if (mediaPlayer != null) {
+            mediaPlayer.release();
+            mediaPlayer = null;
+        }
+        previousResourceId = -1;
+    }
+
+    //
+    //
+    //
+
     public static void play(Resources resources, int resourceId) {
-        initialize();
+        if (mediaPlayer == null) {
+            return;
+        }
         if (previousResourceId == resourceId) {
             mediaPlayer.start();
             return;
@@ -62,7 +74,15 @@ public class BackgroundSoundPlayer {
     }
 
     public static void pause() {
-        mediaPlayer.pause();
+        if (mediaPlayer != null) {
+            mediaPlayer.pause();
+        }
+    }
+
+    public static void resume() {
+        if (mediaPlayer != null && previousResourceId >= 0) {
+            mediaPlayer.start();
+        }
     }
 
 }
