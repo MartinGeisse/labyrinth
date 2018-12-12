@@ -76,8 +76,68 @@ public final class RoomFactories {
 			builder.setDoor(4, 0, Block.DOOR1, Direction.SOUTH, null, 0);
 			builder.setDoor(11, 0, Block.DOOR1, Direction.SOUTH, null, 0);
 			builder.setDoor(0, 7, Block.DOOR1, Direction.EAST, null, 0);
-			builder.setDoor(7, 13, Block.DOOR1, Direction.NORTH, null, 0);
+			builder.setDoor(7, 13, Block.DOOR1, Direction.NORTH, westHubSouth, 0);
 			builder.setBlock(8, 6, Block.LOCK_GOLD);
+			builder.selectDoor(enteringDoor);
+			builder.setBackgroundSound(BackgroundSoundSelector.BACKGROUND2);
+			return builder.getRoom();
+		}
+	};
+
+	public static final RoomFactory westHubSouth = new RoomFactory() {
+		@Override
+		public Room buildRoom(int enteringDoor) {
+			RoomBuilder builder = new RoomBuilder(9, 13);
+			builder.fill(Block.TILE2);
+			builder.roomOutline(Block.WALL2);
+			builder.setBlock(2, 2, Block.TILE2_PILLAR);
+			builder.setBlock(6, 2, Block.TILE2_PILLAR);
+			builder.setBlock(2, 4, Block.TILE2_PILLAR);
+			builder.setBlock(6, 4, Block.TILE2_PILLAR);
+			builder.setBlock(2, 6, Block.TILE2_PILLAR);
+			builder.setBlock(6, 6, Block.TILE2_PILLAR);
+			builder.setBlock(2, 8, Block.TILE2_PILLAR);
+			builder.setBlock(6, 8, Block.TILE2_PILLAR);
+			builder.setBlock(2, 10, Block.TILE2_PILLAR);
+			builder.setBlock(6, 10, Block.TILE2_PILLAR);
+			builder.setDoor(4, 0, Block.DOOR1, Direction.SOUTH, westHub, 4);
+			builder.setDoor(4, 12, Block.DOOR1, Direction.NORTH, westHubSouth2, 0);
+			builder.selectDoor(enteringDoor);
+			builder.setBackgroundSound(BackgroundSoundSelector.BACKGROUND2);
+			return builder.getRoom();
+		}
+	};
+
+	public static final RoomFactory westHubSouth2 = new RoomFactory() {
+		@Override
+		public Room buildRoom(int enteringDoor) {
+			RoomBuilder builder = new RoomBuilder(10, 10);
+			builder.copyFromArray(new byte[] {
+				0, 0, 0, 1, 1, 1, 1, 0, 0, 0,
+				0, 1, 1, 1, 2, 1, 1, 0, 0, 0,
+				0, 1, 2, 1, 2, 2, 1, 0, 0, 0,
+				0, 1, 2, 1, 2, 2, 1, 1, 1, 1,
+				0, 1, 2, 2, 2, 2, 1, 2, 2, 1,
+				0, 1, 1, 1, 2, 2, 1, 2, 2, 1,
+				1, 1, 2, 2, 2, 2, 2, 2, 2, 1,
+				1, 2, 2, 1, 1, 1, 1, 1, 1, 1,
+				1, 2, 1, 1, 0, 0, 0, 0, 0, 0,
+				1, 1, 1, 0, 0, 0, 0, 0, 0, 0,
+			}, new Block[] {Block.NOTHING, Block.WALL2, Block.TILE2});
+			builder.setDoor(4, 0, Block.DOOR1, Direction.SOUTH, westHubSouth, 1);
+			builder.setDoor(8, 3, Block.DOOR1, Direction.SOUTH, null, 0);
+			builder.selectDoor(enteringDoor);
+			builder.setBackgroundSound(BackgroundSoundSelector.BACKGROUND2);
+			return builder.getRoom();
+		}
+	};
+
+	public static final RoomFactory westComputerRoom = new RoomFactory() {
+		@Override
+		public Room buildRoom(int enteringDoor) {
+			RoomBuilder builder = new RoomBuilder(5, 5);
+			builder.setDoor(4, 0, Block.DOOR1, Direction.SOUTH, westHubSouth, 1);
+			builder.setDoor(8, 3, Block.DOOR1, Direction.SOUTH, null, 0);
 			builder.selectDoor(enteringDoor);
 			builder.setBackgroundSound(BackgroundSoundSelector.BACKGROUND2);
 			return builder.getRoom();
@@ -100,7 +160,9 @@ public final class RoomFactories {
 		}
 	};
 
-	public static final int startRoomInitialDoor = 1;
-	public static final RoomFactory startRoom = initial1;
+//	public static final int startRoomInitialDoor = 1;
+//	public static final RoomFactory startRoom = initial1;
+	public static final int startRoomInitialDoor = 0;
+	public static final RoomFactory startRoom = westHub;
 
 }

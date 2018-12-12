@@ -20,7 +20,8 @@ public enum Block {
 	WALL3(true),
 	WATER(true),
 	DOOR1(false),
-	LOCK_GOLD(true);
+	LOCK_GOLD(true),
+	TILE2_PILLAR(true);
 
 	// avoid recreating this array over and over
 	public static final Block[] TABLE = values();

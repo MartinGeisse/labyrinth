@@ -105,6 +105,14 @@ public class RoomBuilder {
         }
     }
 
+    public void copyFromArray(byte[] matrix, Block[] lookupTable) {
+        for (int x = 0; x < room.getWidth(); x++) {
+            for (int y = 0; y < room.getHeight(); y++) {
+                room.setBlock(x, y, lookupTable[matrix[y * room.getWidth() + x] & 0xff]);
+            }
+        }
+    }
+
     //
     // quick helpers
     //
